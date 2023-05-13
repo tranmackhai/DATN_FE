@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 const TrainningDetail = ({ title, content1, content2, subject }) => {
   const theme = useTheme();
   return (
-    <Box display="flex" gap="24px">
+    <Box>
       <Box
         textAlign="center"
         alignItems="center"
@@ -69,14 +69,14 @@ const TrainningDetail = ({ title, content1, content2, subject }) => {
           </table>
         </Box>
       </Box>
-      <div
+      {/* <div
         style={{
           alignSelf: "stretch",
           opacity: "0.2",
           width: "1px",
           backgroundColor: "#555",
         }}
-      ></div>
+      ></div> */}
     </Box>
   );
 };

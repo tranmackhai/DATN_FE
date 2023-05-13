@@ -1,8 +1,12 @@
-import { Box } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
 
 const HomeTitle = ({ title, path, content, align }) => {
+  const { slug } = useParams();
+  const attribute = content.find((item) => item.slug === slug);
+  // if (!slug) return <></>;
+  // console.log(content)
   return (
     <Box width="calc(50% - 12.5px)">
       <Box
@@ -42,17 +46,13 @@ const HomeTitle = ({ title, path, content, align }) => {
           }}
         ></b>
       </Box>
-      <Box
-        display="flex"
-        flexDirection="column"
-        gap="16px"
-        alignItems={align}
-      >
+      <Box display="flex" flexDirection="column" gap="16px" alignItems={align}>
         {content.map((item) => {
+          console.log(`/${path}/${item.slug}`);
           return (
             <Link
               key={item.id}
-              to={item.path}
+              to={`${path}/${item.slug}`}
               style={{
                 display: "flex",
                 flexDirection: "column",

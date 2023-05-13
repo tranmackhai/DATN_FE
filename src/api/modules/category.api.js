@@ -15,9 +15,9 @@ export const leftNav = [
       },
       {
         title: "ĐÀO TẠO SAU ĐẠI HỌC",
-        path: "/dao-tao-sau-dai-hoc"
-      }
-    ]
+        path: "/dao-tao-sau-dai-hoc",
+      },
+    ],
   },
   {
     id: "3",
@@ -34,13 +34,13 @@ export const rightNav = [
     drop: [
       {
         title: "Tin tức",
-        path: "/trangtin",
+        path: "/tintuc",
       },
       {
         title: "TUYỂN DỤNG",
-        path: "/tuyendung"
-      }
-    ]
+        path: "/tuyendung",
+      },
+    ],
   },
   {
     id: "2",
@@ -51,6 +51,15 @@ export const rightNav = [
     id: "3",
     title: "Thành viên",
     path: "/dangnhap",
+    drop: [
+      {
+        title: "Đăng nhập",
+        path: "/dangnhap",
+      },
+      {
+        title: "Đăng ký",
+        path: "/dangky",
+      },
+    ],
   },
 ];
-

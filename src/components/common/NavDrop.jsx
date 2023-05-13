@@ -14,7 +14,7 @@ const NavDrop = ({ items }) => {
           borderRadius: "4px",
           padding: "12px 24px",
           minWidth: "280px",
-          boxShadow: " rgba(0, 0, 0, 0.32) -3.67394e-16px 2px 8px 0px ",
+          boxShadow: "rgba(0, 0, 0, 0.32) -3.67394e-16px 2px 8px 0px",
         }}
       >
         {items.map((item, index) => {

@@ -24,7 +24,7 @@ const Navbar = ({ justify, items }) => {
                   a: {
                     textTransform: "uppercase",
                     position: "relative",
-                    padding: "10px",
+                    margin: "10px",
                     color: theme.palette.primary.contrastText,
                     fontWeight: "500"
                   },

@@ -1,5 +1,5 @@
-import themeConfigs from "./configs/color.config";
 import Router from "./routes/routes";
+import themeConfigs from "./configs/color.config";
 import { ThemeProvider } from "@mui/material/styles";
 
 const App = () => {

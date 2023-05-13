@@ -1,16 +1,16 @@
 import publicClient from "../client/public.client.js";
 
-const studentEndpoints = {
+const accountEndpoints = {
   login: "auth/login",
   register: "auth/register",
   // getInfo: "user/info",
   // passwordUpdate: "user/update-password",
 };
 
-const studentApi = {
+const accountApi = {
   login: async ({ gmail, password }) => {
     try {
-      const response = await publicClient.post(studentEndpoints.login, {
+      const response = await publicClient.post(accountEndpoints.login, {
         gmail,
         password,
       });
@@ -21,7 +21,7 @@ const studentApi = {
   },
   register: async ({ name, password, gmail, phone }) => {
     try {
-      const response = await publicClient.post(studentEndpoints.register, {
+      const response = await publicClient.post(accountEndpoints.register, {
         gmail,
         password,
         name,
@@ -35,7 +35,7 @@ const studentApi = {
   },
   // getInfo: async ({}) => {
   //   try {
-  //     const response = await privateClient.get(studentEndpoints.getInfo);
+  //     const response = await privateClient.get(accountEndpoints.getInfo);
   //     return { response };
   //   } catch (err) {
   //     return { err };
@@ -43,7 +43,7 @@ const studentApi = {
   // },
   // passwordUpdate: async ({ password, newPassword, confirmNewPassword }) => {
   //   try {
-  //     const response = await privateClient.put(studentEndpoints.register, {
+  //     const response = await privateClient.put(accountEndpoints.register, {
   //       password,
   //       newPassword,
   //       confirmNewPassword,
@@ -55,4 +55,4 @@ const studentApi = {
   // },
 };
 
-export default studentApi;
+export default accountApi;
