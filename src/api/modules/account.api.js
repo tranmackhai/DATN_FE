@@ -14,18 +14,20 @@ const accountApi = {
         gmail,
         password,
       });
+      // console.log(response);
       return { response };
     } catch (err) {
       return { err };
     }
   },
-  register: async ({ name, password, gmail, phone }) => {
+  register: async ({ name, password, gmail, phone, role }) => {
     try {
       const response = await publicClient.post(accountEndpoints.register, {
         gmail,
         password,
         name,
         phone,
+        role,
       });
 
       return { response };

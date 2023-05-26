@@ -1,16 +1,17 @@
-import React from "react";
-import { LoadingButton } from "@mui/lab";
-import { Alert, Box, Button, Stack, TextField } from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import accountApi from "../../api/modules/account.api";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Stack, TextField } from "@mui/material";
+import { useFormik } from "formik";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import accountApi from "../../api/modules/account.api";
+import { setAccount } from "../../redux/features/accountSlice";
 
 const LoginForm = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const dispath = useDispatch();
   const [isLoginRequest, setisLoginRequest] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
@@ -21,20 +22,29 @@ const LoginForm = () => {
     },
     validationSchema: Yup.object({
       gmail: Yup.string()
-        .min(12, "Gmail tối thiểu 12 ký tự ")
+        .min(8, "Gmail tối thiểu 8 ký tự ")
         .required("Gmail là bắt buộc"),
       password: Yup.string()
         .min(8, "Mật khẩu tối thiểu 8 ký tự ")
         .required("Mật khẩu là bắt buộc"),
     }),
     onSubmit: async (values) => {
-      const respone = await accountApi.login(values);
-      console.log(respone);
+      try {
+        const respone = await accountApi.login(values);
+        // console.log(respone.response.status);
+        if (respone.response.status === 201) {
+          navigate("/");
+          dispath(setAccount(respone.response.data));
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
   // console.log(loginForm.values)
-  console.log(loginForm.errors);
+  // console.log(loginForm.errors);
+  // console.log()
   return (
     <Box component="form" onSubmit={loginForm.handleSubmit}>
       <Stack spacing={4}>

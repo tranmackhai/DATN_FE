@@ -12,70 +12,144 @@ import {
   Typography,
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { setAccount } from "../../redux/features/accountSlice";
+import accountApi from "../../api/modules/account.api";
+
+const roles = [
+  {
+    label: "Sinh viên",
+    value: "student",
+  },
+  {
+    label: "Nhà tuyển dụng",
+    value: "recruitment",
+  },
+];
 
 const RegisterForm = () => {
+  const registerForm = useFormik({
+    initialValues: {
+      name: "",
+      gmail: "",
+      phone: "",
+      password: "",
+      role: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .min(4, "Họ và tên tối thiểu 4 ký tự ")
+        .required("Bạn phải nhập tên"),
+      gmail: Yup.string()
+        .matches(
+          /([a-zA-Z0-9]+)([\_\.\-{1}])?([a-zA-Z0-9]+)\@([a-zA-Z0-9]+)([\.])([a-zA-Z\.]+)/g,
+          "Gmail không hợp lệ"
+        )
+        .required("Bạn phải nhập Gmail"),
+      phone: Yup.string()
+        .min(10, "Số điện thoại không hợp lệ")
+        .matches(
+          /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
+          "Số điện thoại không hợp lệ"
+        )
+        .required("Bạn phải nhập số điện thoại"),
+      password: Yup.string()
+        .min(8, "Mật khẩu tối thiểu 8 ký tự ")
+        .required("Bạn phải nhập mật khẩu"),
+      role: Yup.string().required("Bạn phải chọn kiểu thành viên"),
+    }),
+    onSubmit: async (values) => {
+      // console.log({ ...values, role });
+      try {
+        const respone = await accountApi.register({ ...values });
+        if (respone.response.status === 201) {
+          navigate("/");
+          dispath(setAccount(respone.response.data));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
   const theme = useTheme();
+  const [isRegisterRequest, setisRegisterRequest] = useState(false);
+  const navigate = useNavigate();
+  const dispath = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  // console.log(role);
+  console.log(registerForm.errors);
   return (
-    <Box component="form" onSubmit={() => {}}>
+    <Box component="form" onSubmit={registerForm.handleSubmit}>
       <Stack spacing={3}>
         <TextField
           type="text"
-          placeholder="Nhập tên của bạn"
+          placeholder="Nhập họ và tên"
           name="name"
           fullWidth
-          // value={}
-          // onChange={}
+          value={registerForm.values.name}
+          onChange={registerForm.handleChange}
           color="success"
-          error={false}
-          helperText={""}
+          error={
+            registerForm.touched.name && registerForm.errors.name !== undefined
+          }
+          helperText={registerForm.touched.name && registerForm.errors.name}
         />
         <TextField
           type="text"
-          placeholder="Nhập gmail của bạn"
+          placeholder="Nhập gmail"
           name="gmail"
           fullWidth
-          // value={}
-          // onChange={}
+          value={registerForm.values.gmail}
+          onChange={registerForm.handleChange}
           color="success"
-          error={true}
-          helperText={""}
+          error={
+            registerForm.touched.gmail &&
+            registerForm.errors.gmail !== undefined
+          }
+          helperText={registerForm.touched.gmail && registerForm.errors.gmail}
         />
         <TextField
           type="text"
-          placeholder="Nhập số điện thoại của bạn"
+          placeholder="Nhập số điện thoại"
           name="phone"
           fullWidth
-          // value={}
-          // onChange={}
+          value={registerForm.values.phone}
+          onChange={registerForm.handleChange}
           color="success"
-          error={true}
-          helperText={""}
+          error={
+            registerForm.touched.phone &&
+            registerForm.errors.phone !== undefined
+          }
+          helperText={registerForm.touched.phone && registerForm.errors.phone}
         />
         <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
           <OutlinedInput
             id="outlined-adornment-password"
-            fullWidth="false"
-            placeholder="Nhập mật khẩu của bạn"
+            fullWidth
+            placeholder="Nhập mật khẩu"
             color="success"
             type={showPassword ? "text" : "password"}
-            // value={}
-            // onChange={loginForm.handleChange}
-            // error={
-            //   loginForm.touched.password &&
-            //   loginForm.errors.password !== undefined
+            value={registerForm.values.password}
+            onChange={(e) => {
+              registerForm.setFieldValue("password", e.target.value);
+            }}
+            error={
+              registerForm.touched.password &&
+              registerForm.errors.password !== undefined
+            }
+            // helperText={
+            //   registerForm.touched.password && registerForm.errors.password
             // }
-            // helperText={loginForm.touched.password && loginForm.errors.password}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -89,49 +163,56 @@ const RegisterForm = () => {
               </InputAdornment>
             }
           />
+          <p className="MuiFormHelperText-root Mui-error MuiFormHelperText-sizeMedium MuiFormHelperText-contained MuiFormHelperText-filled css-1wc848c-MuiFormHelperText-root">
+            {registerForm.touched.password && registerForm.errors.password}
+          </p>
         </FormControl>
-        <Box
-          sx={{
-            span: {
-              margin: "0 4px",
-              textAlign: "center",
-              input: {
-                height: "40px",
-                margin: "0",
-                opacity: "0",
-                outline: "none",
-                padding: "0",
-                // position: "absolute",
-                "&:checked+label": {
-                  background: "0 0",
-                  border: "1px solid #fcaf17",
-                },
-              },
-              label: {
-                backgroundColor: "#f2f2f2",
-                border: "1px solid #f2f2f2",
-                borderRadius: "4px",
-                color: "#6c757d",
-                cursor: "pointer",
-                fontSize: "1.1rem",
-                padding: "8px 12px",
-                overflow: "hidden",
-                // position: "relative",
-              },
-            },
-          }}
-        >
-          <Typography sx={{ fontWeight: 500, fontSize: "1rem" }}>
-            Bạn là gì?
+        <Box>
+          <Typography
+            sx={{ fontWeight: 500, fontSize: "1rem", marginBottom: "12px" }}
+          >
+            Bạn là ai?
           </Typography>
-          <span>
-            <input type="radio" id="radio-1" name="favorite" value="radio-1" />
-            <label htmlFor="radio-1">Sinh viên</label>
-          </span>
-          <span>
-            <input type="radio" id="radio-2" name="favorite" value="radio-2" />
-            <label htmlFor="radio-2">Nhà tuyển dụng</label>
-          </span>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              span: {
+                display: "block",
+                textAlign: "center",
+                margin: "0 4px",
+                width: "140px",
+                padding: "8px 0",
+                borderRadius: "6px",
+                cursor: "pointer",
+                backgroundColor: "#f8f8f8",
+              },
+            }}
+          >
+            {roles.map((item) => {
+              return (
+                <span
+                  key={item.value}
+                  style={
+                    item.value === registerForm.values.role
+                      ? { border: "1px solid #fcaf17", backgroundColor: "#fff" }
+                      : {}
+                  }
+                  onClick={() => {
+                    registerForm.setFieldValue("role", item.value);
+                  }}
+                >
+                  {item.label}
+                </span>
+              );
+            })}
+          </Box>
+          <p
+            className="MuiFormHelperText-root Mui-error MuiFormHelperText-sizeMedium MuiFormHelperText-contained MuiFormHelperText-filled css-1wc848c-MuiFormHelperText-root"
+            style={{ textAlign: "center" }}
+          >
+            {registerForm.touched.role && registerForm.errors.role}
+          </p>
         </Box>
 
         <LoadingButton
@@ -139,7 +220,7 @@ const RegisterForm = () => {
           fullWidth
           size="large"
           variant="contained"
-          // loading={isLoginRequest}
+          loading={isRegisterRequest}
           sx={{
             marginTop: 4,
             color: theme.palette.secondary.contrastText,
@@ -151,7 +232,7 @@ const RegisterForm = () => {
         </LoadingButton>
         <Button
           component={Link}
-          to="/dangky"
+          to="/dangnhap"
           fullWidth
           sx={{
             marginTop: 1,

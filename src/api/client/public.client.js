@@ -5,28 +5,28 @@ const baseURL = "http://127.0.0.1:3050/api/";
 
 const publicClient = axios.create({
   baseURL,
-  paramsSerializer: {
-    encode: (params) => queryString.stringify(params),
-  },
+  // paramsSerializer: {
+  //   encode: (params) => queryString.stringify(params),
+  // },
 });
 
 publicClient.interceptors.request.use(async (config) => {
   return {
     ...config,
-    headers: {
-      "Content-Type": "application/json",
-    },
+    // headers: {
+    //   "Content-Type": "application/json",
+    // },
   };
 });
 
-publicClient.interceptors.response.use(
-  (response) => {
-    if (response && response.data) return response.data;
-    return response;
-  },
-  (err) => {
-    throw err.response.data;
-  }
-);
+// publicClient.interceptors.response.use(
+//   (response) => {
+//     if (response && response.data) return response.data ;
+//     return response;
+//   },
+//   (err) => {
+//     throw err.response.data;
+//   }
+// );
 
 export default publicClient;

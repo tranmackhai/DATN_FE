@@ -9,6 +9,7 @@ const Comment = () => {
   const handleClick = () => {
     console.log(comment);
   };
+
   return (
     <section className="comment">
       <Box
@@ -37,20 +38,6 @@ const Comment = () => {
       >
         <Typography textTransform="uppercase" variant="h6" fontWeight="700">
           Bình Luận
-        </Typography>
-        <Typography
-          sx={{
-            background: "#f2dede",
-            borderColor: "#ebccd1",
-            padding: "8px 64px",
-            borderRadius: "4px",
-            a: {
-              color: "#000",
-              fontWeight: "700",
-            },
-          }}
-        >
-          Bạn cần <Link to="/dangnhap">Đăng nhập</Link> để bình luận
         </Typography>
         <textarea
           rows={6}

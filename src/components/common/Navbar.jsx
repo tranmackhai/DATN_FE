@@ -3,9 +3,12 @@ import { Box, Container } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import NavDrop from "./NavDrop";
+import { useSelector } from "react-redux";
 
 const Navbar = ({ justify, items }) => {
   const theme = useTheme();
+  const user = useSelector((state) => state.account.account);
+  // console.log(user)
   return (
     <section className="navbar">
       <Container disableGutters={true} maxWidth="lg">
@@ -26,7 +29,7 @@ const Navbar = ({ justify, items }) => {
                     position: "relative",
                     margin: "10px",
                     color: theme.palette.primary.contrastText,
-                    fontWeight: "500"
+                    fontWeight: "500",
                   },
                   "a.active": {
                     color: theme.palette.primary.highlightText,
@@ -63,6 +66,16 @@ const Navbar = ({ justify, items }) => {
                   )}
                 </NavLink>
                 {item.drop ? <NavDrop items={item.drop} /> : <></>}
+                {user?.role === "student" && item.drop2 ? (
+                  <NavDrop items={item.drop2} />
+                ) : (
+                  <></>
+                )}
+                {user?.role === "recruitment" && item.drop3 ? (
+                  <NavDrop items={item.drop3} />
+                ) : (
+                  <></>
+                )}
               </Box>
             );
           })}

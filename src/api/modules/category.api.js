@@ -50,7 +50,7 @@ export const rightNav = [
   {
     id: "3",
     title: "Thành viên",
-    path: "/dangnhap",
+    // path: "/dangnhap",
     drop: [
       {
         title: "Đăng nhập",
@@ -59,6 +59,30 @@ export const rightNav = [
       {
         title: "Đăng ký",
         path: "/dangky",
+      },
+    ],
+    drop2: [
+      {
+        title: "Thông tin tài khoản",
+        path: "/thong-tin-ca-nhan",
+      },
+      {
+        title: "Đăng xuất",
+        path: "/",
+      },
+    ],
+    drop3: [
+      {
+        title: "Thông tin tài khoản",
+        path: "/thong-tin-ca-nhan",
+      },
+      {
+        title: "Đăng tin",
+        path: "/dangtin",
+      },
+      {
+        title: "Đăng xuất",
+        path: "/",
       },
     ],
   },

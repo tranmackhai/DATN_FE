@@ -1,20 +1,25 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DefaultLayout from "../components/layouts/DefaultLayout";
+import NewsLayout from "../components/layouts/NewsLayout";
+import UserLayout from "../components/layouts/UserLayout";
+import About from "../pages/About/About";
+import AuthAccount from "../pages/Auth/AuthAccount";
 import HomePage from "../pages/HomePage/HomePage";
 import Login from "../pages/Login/Login";
-import Register from "../pages/Register/Register";
-import About from "../pages/About/About";
-import UniversityTrainning from "../pages/Trainning/UniversityTrainning/UniversityTrainning";
-import GraduateTrainning from "../pages/Trainning/GraduateTrainning/GraduateTrainning";
-import Trainning from "../pages/Trainning/Trainning";
-import NewsLayout from "../components/layouts/NewsLayout";
-import ScientificResearch from "../pages/ScientificResearch/ScientificResearch";
-import ScientificResearchDetail from "../pages/ScientificResearch/ScientificResearchDetail";
 import News from "../pages/News/News";
 import NewsDetail from "../pages/News/NewsDetail";
 import Recruitment from "../pages/Recruitment/Recruitment";
 import RecruitmentDetail from "../pages/Recruitment/RecruitmentDetail";
+import Register from "../pages/Register/Register";
+import ScientificResearch from "../pages/ScientificResearch/ScientificResearch";
+import ScientificResearchDetail from "../pages/ScientificResearch/ScientificResearchDetail";
+import GraduateTrainning from "../pages/Trainning/GraduateTrainning/GraduateTrainning";
+import Trainning from "../pages/Trainning/Trainning";
+import UniversityTrainning from "../pages/Trainning/UniversityTrainning/UniversityTrainning";
+import ChangePassword from "../pages/UserPage/Contennt/ChangePassword/ChangePassword";
+import Information from "../pages/UserPage/Contennt/Information/Information";
+import NewsFormPage from "../pages/NewsFormPage/NewsFormPage"
 
 export default function Router() {
   return (
@@ -122,6 +127,34 @@ export default function Router() {
             <NewsLayout sidebar={true}>
               <RecruitmentDetail />
             </NewsLayout>
+          }
+        />
+        <Route
+          path="/dangtin"
+          element={
+            // <AuthRecruitment>
+            <DefaultLayout>
+              <NewsFormPage />
+            </DefaultLayout>
+            // </AuthRecruitment>
+          }
+        />
+        <Route
+          path="/thong-tin-ca-nhan"
+          element={
+            <AuthAccount>
+              <UserLayout>
+                <Information />
+              </UserLayout>
+            </AuthAccount>
+          }
+        />
+        <Route
+          path="/doi-mat-khau"
+          element={
+            <UserLayout>
+              <ChangePassword />
+            </UserLayout>
           }
         />
       </Routes>

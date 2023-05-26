@@ -16,6 +16,7 @@ const Login = () => {
             padding: 10,
             borderRadius: "4px",
             outline: "none",
+            boxShadow: "rgba(0, 0, 0, 0.32) -3.67394e-16px 2px 8px 0px"
           }}
         >
           <LoginFrom />

@@ -4,10 +4,12 @@ import { useParams } from "react-router-dom";
 import { scientificResearch } from "../../api/modules/scientificResearch.api";
 import { useTheme } from "@emotion/react";
 import Comment from "../../components/common/Comment";
+import { useSelector } from "react-redux";
 
 const ScientificResearchDetail = () => {
   const { slug } = useParams();
   const theme = useTheme();
+  const user = useSelector((state) => state.account.account);
   const data = scientificResearch.find((item) => item.slug === slug);
 
   // if (!slug) return <></>;
@@ -36,7 +38,7 @@ const ScientificResearchDetail = () => {
           <img src={data.img} />
         </Box>
         <Typography>{data.content}</Typography>
-        <Comment />
+        {user && <Comment />}
       </Box>
     </section>
   );

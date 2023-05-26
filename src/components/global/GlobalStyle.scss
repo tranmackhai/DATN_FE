@@ -7,8 +7,11 @@ html {
 }
 a {
   text-decoration: none;
+  color: #000,
 }
-
+li {
+  list-style: none;
+}
 .line_clamp {
   overflow: hidden;
   display: -webkit-box;

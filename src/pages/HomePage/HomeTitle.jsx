@@ -48,7 +48,7 @@ const HomeTitle = ({ title, path, content, align }) => {
       </Box>
       <Box display="flex" flexDirection="column" gap="16px" alignItems={align}>
         {content.map((item) => {
-          console.log(`/${path}/${item.slug}`);
+          {/* console.log(`/${path}/${item.slug}`); */}
           return (
             <Link
               key={item.id}

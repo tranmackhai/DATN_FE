@@ -4,11 +4,13 @@ import { Box, Typography } from "@mui/material";
 import { news } from "../../api/modules/news.api";
 import { useParams } from "react-router-dom";
 import Comment from "../../components/common/Comment";
+import { useSelector } from "react-redux";
 
 const NewsDetail = () => {
   const theme = useTheme();
   const { slug } = useParams();
   const data = news.find((item) => item.slug === slug);
+  const user = useSelector((state) => state.account.account);
   return (
     <section className="news-detail">
       <Box>
@@ -34,7 +36,7 @@ const NewsDetail = () => {
             <img src={data.img} />
           </Box>
           <Typography>{data.content}</Typography>
-          <Comment />
+          {user && <Comment />}
         </Box>
       </Box>
     </section>
