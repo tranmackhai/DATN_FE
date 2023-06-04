@@ -7,7 +7,7 @@ html {
 }
 a {
   text-decoration: none;
-  color: #000,
+  color: #000;
 }
 li {
   list-style: none;
@@ -51,4 +51,9 @@ li {
   background-color: rgba(0, 0, 0, 0.1);
   margin: 24px auto;
   width: 30px;
+}
+.css-1sbvjqm-MuiButtonBase-root-MuiPickersDay-root:focus.Mui-selected {
+  color: #fff;
+  background-color: #fcaf17 !important;
+  font-weight: 500;
 }

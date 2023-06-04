@@ -1,14 +1,24 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setAccount } from "../../redux/features/accountSlice";
+import accountApi from "../../api/modules/account.api";
 
 const NavDrop = ({ items }) => {
-  const dispath = useDispatch();
-  const handleClick = (title) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleClick = async (e, title) => {
     if (title === "Đăng xuất") {
-      dispath(setAccount(null));
+      try {
+        e.preventDefault();
+        const res = await accountApi.logout();
+        // console.log(res);
+        if (res.response.data.message === "Đăng xuất thành công") {
+          dispatch(setAccount(null));
+          navigate("/");
+        }
+      } catch (error) {}
     }
   };
   return (
@@ -51,8 +61,8 @@ const NavDrop = ({ items }) => {
             >
               <Link
                 to={item.path}
-                onClick={() => {
-                  handleClick(item.title);
+                onClick={(e) => {
+                  handleClick(e, item.title);
                 }}
               >
                 {item.title}

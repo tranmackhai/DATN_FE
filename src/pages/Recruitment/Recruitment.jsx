@@ -3,6 +3,7 @@ import { Box, Pagination, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import newsApi from "../../api/modules/newsCopy.api";
+import moment from "moment";
 
 const Recruitment = () => {
   const theme = useTheme();
@@ -75,7 +76,7 @@ const Recruitment = () => {
                   >
                     {item.title}
                   </Typography>
-                  <span>{item.createdAt}</span>
+                  <span>{moment(item.createdAt).format("MM/DD/YYYY")}</span>
                 </Box>
               </Link>
             </Box>

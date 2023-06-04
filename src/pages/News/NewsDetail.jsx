@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import { Box, Typography } from "@mui/material";
-import { news } from "../../api/modules/news.api";
 import { useParams } from "react-router-dom";
 import Comment from "../../components/common/Comment";
 import { useSelector } from "react-redux";
+import newsApi from "../../api/modules/newsCopy.api";
+import moment from "moment";
 
 const NewsDetail = () => {
   const theme = useTheme();
   const { slug } = useParams();
-  const data = news.find((item) => item.slug === slug);
   const user = useSelector((state) => state.account.account);
+  const [news, setNews] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await newsApi.getAll({
+          type: "news",
+          slug: slug,
+        });
+        setNews(response.data.rows[0]);
+      } catch (error) {}
+    };
+    fetchData();
+  }, [slug]);
+  if (!news) return <></>;
+
   return (
     <section className="news-detail">
       <Box>
@@ -29,13 +44,13 @@ const NewsDetail = () => {
           }}
         >
           <Typography variant="h5" fontWeight={500} marginBottom="24px">
-            {data.title}
+            {news.title}
           </Typography>
-          <span>{data.createdAt}</span>
+          <span>{moment(news.createdAt).format("MM/DD/YYYY")}</span>
           <Box textAlign="center">
-            <img src={data.img} />
+            <img src={news.thumbnail} />
           </Box>
-          <Typography>{data.content}</Typography>
+          <div dangerouslySetInnerHTML={{ __html: news.content }}></div>
           {user && <Comment />}
         </Box>
       </Box>

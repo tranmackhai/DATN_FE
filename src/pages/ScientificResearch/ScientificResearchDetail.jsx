@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { scientificResearch } from "../../api/modules/scientificResearch.api";
 import { useTheme } from "@emotion/react";
 import Comment from "../../components/common/Comment";
 import { useSelector } from "react-redux";
+import newsApi from "../../api/modules/newsCopy.api";
 
 const ScientificResearchDetail = () => {
   const { slug } = useParams();
   const theme = useTheme();
   const user = useSelector((state) => state.account.account);
-  const data = scientificResearch.find((item) => item.slug === slug);
+  const [scientificResearch, setScientificResearch] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await newsApi.getAll({
+          type: "scientificResearch",
+          slug: slug,
+        });
+        setScientificResearch(response.data.rows[0]);
+      } catch (error) {}
+    };
+    fetchData();
+  }, [slug]);
+  if (!scientificResearch) return <></>;
 
-  // if (!slug) return <></>;
-  // console.log(data);
   return (
     <section className="scientific-research-detail">
       <Box
@@ -31,13 +42,15 @@ const ScientificResearchDetail = () => {
         }}
       >
         <Typography variant="h5" fontWeight={500} marginBottom="24px">
-          {data.title}
+          {scientificResearch.title}
         </Typography>
-        <span>{data.createdAt}</span>
+        <span>{scientificResearch.createdAt}</span>
         <Box textAlign="center">
-          <img src={data.img} />
+          <img src={scientificResearch.thumbnail} />
         </Box>
-        <Typography>{data.content}</Typography>
+        <div
+          dangerouslySetInnerHTML={{ __html: scientificResearch.content }}
+        ></div>
         {user && <Comment />}
       </Box>
     </section>

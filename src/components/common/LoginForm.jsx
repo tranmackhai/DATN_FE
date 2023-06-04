@@ -1,8 +1,8 @@
+import React, { useState } from "react";
 import { useTheme } from "@emotion/react";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Stack, TextField } from "@mui/material";
+import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -12,7 +12,7 @@ import { setAccount } from "../../redux/features/accountSlice";
 const LoginForm = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const [isLoginRequest, setisLoginRequest] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
   const loginForm = useFormik({
@@ -34,10 +34,11 @@ const LoginForm = () => {
         // console.log(respone.response.status);
         if (respone.response.status === 201) {
           navigate("/");
-          dispath(setAccount(respone.response.data));
+          dispatch(setAccount(respone.response.data));
         }
       } catch (error) {
         console.log(error);
+        setErrorMessage(error.response.data);
       }
     },
   });
@@ -75,6 +76,7 @@ const LoginForm = () => {
           }
           helperText={loginForm.touched.password && loginForm.errors.password}
         />
+        <Typography sx={{fontSize: "0.9rem", color: "red"}}>{errorMessage}</Typography>
         <LoadingButton
           type="submit"
           fullWidth
@@ -83,7 +85,7 @@ const LoginForm = () => {
           loading={isLoginRequest}
           sx={{
             marginTop: 4,
-            color: theme.palette.primary.contrastText,
+            color: "#fff",
             fontWeight: "700",
             "&:hover": { backgroundColor: theme.palette.primary.main },
           }}

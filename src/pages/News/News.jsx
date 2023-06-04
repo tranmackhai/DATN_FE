@@ -1,15 +1,37 @@
 import React from "react";
-import { news } from "../../api/modules/news.api";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
+import { useState } from "react";
+import { useEffect } from "react";
+import newsApi from "../../api/modules/newsCopy.api";
+import moment from "moment";
+
 
 const News = () => {
+  const [news,setNews] = useState()
+
+  useEffect(() => {
+    (async() =>{
+      try {
+        const res = await newsApi.getAll({
+          type: "news",
+          p:1,
+          limit:5
+        })
+        if(res.status === 200) {
+          setNews(res.data.rows)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  },[])
   const theme = useTheme();
   return (
     <section className="news">
       <Box>
-        {news.map((item) => {
+        {news?.map((item) => {
           return (
             <Box
               key={item.id}
@@ -36,7 +58,7 @@ const News = () => {
               <Link to={`/tintuc/${item.slug}`}>
                 <Box sx={{ width: "120px" }}>
                   <img
-                    src={item.img}
+                    src={item.thumbnail}
                     style={{
                       width: "120px",
                       height: "60px",
@@ -53,7 +75,7 @@ const News = () => {
                   >
                     {item.title}
                   </Typography>
-                  <span>{item.createdAt}</span>
+                  <span>{moment(item.createdAt).format("MM/DD/YYYY")}</span>
                 </Box>
               </Link>
             </Box>

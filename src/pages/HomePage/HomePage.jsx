@@ -1,12 +1,48 @@
-import React from "react";
-import Banner from "../../components/common/Banner";
 import { Box, Container, Typography, useTheme } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import newsApi from "../../api/modules/newsCopy.api";
+import Banner from "../../components/common/Banner";
 import HomeTitle from "./HomeTitle";
-import { news } from "../../api/modules/news.api";
-import { jobs } from "../../api/modules/jobs.api";
 import Overview from "./Overview";
 
 const HomePage = () => {
+  const [recruitment, setRecruitment] = useState();
+  const [news, setNews] = useState();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await newsApi.getAll({
+          type: "recruitment",
+          p: 1,
+          limit: 5,
+          isActive: true,
+        });
+        if (res.status === 200) {
+          setRecruitment(res.data.rows);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await newsApi.getAll({
+          type: "news",
+          p: 1,
+          limit: 5,
+        });
+        if (res.status === 200) {
+          setNews(res.data.rows);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
   const theme = useTheme();
   return (
     <section className="homepage">
@@ -23,10 +59,10 @@ const HomePage = () => {
             }}
           ></div>
           <HomeTitle
+            content={recruitment}
             title="Tuyển dụng"
             path="/tuyendung"
-            content={jobs}
-            align="flex-end"
+            // align="flex-end"
           />
         </Box>
         <Box>

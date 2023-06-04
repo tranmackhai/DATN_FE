@@ -6,13 +6,24 @@ const newsEndpoints = {
 };
 
 const newsApi = {
-  create: async ({ title, thumbnail, content, slug }) => {
+  create: async ({
+    title,
+    thumbnail,
+    content,
+    slug,
+    accountId,
+    type,
+    isActive,
+  }) => {
     try {
       const response = await publicClient.post(newsEndpoints.create, {
         title,
         thumbnail,
         content,
         slug,
+        accountId,
+        type,
+        isActive,
       });
       return response;
     } catch (err) {

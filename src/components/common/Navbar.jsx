@@ -76,6 +76,11 @@ const Navbar = ({ justify, items }) => {
                 ) : (
                   <></>
                 )}
+                {user?.role === "teacher" && item.drop4 ? (
+                  <NavDrop items={item.drop4} />
+                ) : (
+                  <></>
+                )}
               </Box>
             );
           })}

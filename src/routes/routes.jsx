@@ -19,7 +19,10 @@ import Trainning from "../pages/Trainning/Trainning";
 import UniversityTrainning from "../pages/Trainning/UniversityTrainning/UniversityTrainning";
 import ChangePassword from "../pages/UserPage/Contennt/ChangePassword/ChangePassword";
 import Information from "../pages/UserPage/Contennt/Information/Information";
-import NewsFormPage from "../pages/NewsFormPage/NewsFormPage"
+import NewsFormPage from "../pages/NewsFormPage/NewsFormPage";
+import NewsFormPageTeacher from "../pages/NewsFormPageTeacher/NewsFormPageTeacher";
+import AuthRecruitment from "../pages/Auth/AuthRecruitment";
+import AuthTeacher from "../pages/Auth/AuthTeacher";
 
 export default function Router() {
   return (
@@ -132,11 +135,21 @@ export default function Router() {
         <Route
           path="/dangtin"
           element={
-            // <AuthRecruitment>
-            <DefaultLayout>
-              <NewsFormPage />
-            </DefaultLayout>
-            // </AuthRecruitment>
+            <AuthRecruitment>
+              <DefaultLayout>
+                <NewsFormPage />
+              </DefaultLayout>
+            </AuthRecruitment>
+          }
+        />
+        <Route
+          path="/dangtingiaovien"
+          element={
+            <AuthTeacher>
+              <DefaultLayout>
+                <NewsFormPageTeacher />
+              </DefaultLayout>
+            </AuthTeacher>
           }
         />
         <Route

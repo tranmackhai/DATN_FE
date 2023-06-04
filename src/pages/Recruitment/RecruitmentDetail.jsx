@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { useParams } from "react-router-dom";
-import { jobs } from "../../api/modules/jobs.api";
 import Comment from "../../components/common/Comment";
 import { useSelector } from "react-redux";
 import newsApi from "../../api/modules/newsCopy.api";
+import moment from "moment";
 
 const RecruitmentDetail = () => {
   const theme = useTheme();
   const { slug } = useParams();
-  const [news, setNews] = useState();
-  const data = jobs.find((item) => item.slug === slug);
   const user = useSelector((state) => state.account.account);
+  const [recruitment, setRecruitment] = useState();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,12 +19,12 @@ const RecruitmentDetail = () => {
           type: "recruitment",
           slug: slug,
         });
-        setNews(response.data.rows[0]);
+        setRecruitment(response.data.rows[0]);
       } catch (error) {}
     };
     fetchData();
   }, [slug]);
-  if (!news) return <></>;
+  if (!recruitment) return <></>;
   return (
     <section className="recruitment-detail">
       <Box>
@@ -44,13 +43,13 @@ const RecruitmentDetail = () => {
           }}
         >
           <Typography variant="h5" fontWeight={500} marginBottom="24px">
-            {news.title}
+            {recruitment.title}
           </Typography>
-          <span>{news.createdAt}</span>
+          <span>{moment(recruitment.createdAt).format("MM/DD/YYYY")}</span>
           <Box textAlign="center">
-            <img src={news.thumbnail} />
+            <img src={recruitment.thumbnail} />
           </Box>
-          <div dangerouslySetInnerHTML={{ __html: news.content }}></div>
+          <div dangerouslySetInnerHTML={{ __html: recruitment.content }}></div>
           {user && <Comment />}
         </Box>
       </Box>

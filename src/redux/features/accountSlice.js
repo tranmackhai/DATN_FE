@@ -4,22 +4,31 @@ export const accountSlice = createSlice({
   name: "account",
   initialState: {
     account: null,
+    currentAccount: null,
+    isFinishGetProfile: false,
   },
   reducers: {
     setAccount: (state, action) => {
-      // console.log(action.payload)
-      if (action.payload === null) {
+      if (!action.payload) {
+        state.account = null;
         localStorage.removeItem("actkn");
       } else {
-        if (action.payload.token)
-          localStorage.setItem("actkn", action.payload.token);
-        // state.account = action.payload.user
+        if (action.payload.accessToken) {
+          localStorage.setItem("actkn", action.payload.accessToken);
+        }
+        state.account = action.payload.user;
+        state.isFinishGetProfile = true;
       }
-      state.account = action.payload.user;
+    },
+    setCurrentUser: (state, action) => {
+      state.currentAccount = action.payload;
+    },
+    setProfile: (state, action) => {
+      state.account = action.payload;
     },
   },
 });
 
-export const { setAccount } = accountSlice.actions;
+export const { setAccount, setCurrentUser, setProfile } = accountSlice.actions;
 
 export default accountSlice.reducer;

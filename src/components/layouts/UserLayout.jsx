@@ -74,7 +74,7 @@ const UserLayout = ({ children }) => {
             {list_item.find((item) => item.title === active)?.header_title}
           </Typography>
           <Container disableGutters={true} maxWidth="lg">
-            <Grid container>
+            <Grid container spacing={3}>
               <Grid item xs={3}>
                 <SidebarUserPage
                   list_item={list_item}

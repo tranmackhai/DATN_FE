@@ -1,12 +1,9 @@
-import React from "react";
 import { Box } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import moment from "moment";
+import React from "react";
+import { Link } from "react-router-dom";
 
-const HomeTitle = ({ title, path, content, align }) => {
-  const { slug } = useParams();
-  const attribute = content.find((item) => item.slug === slug);
-  // if (!slug) return <></>;
-  // console.log(content)
+const HomeTitle = ({ title, path, content }) => {
   return (
     <Box width="calc(50% - 12.5px)">
       <Box
@@ -46,9 +43,8 @@ const HomeTitle = ({ title, path, content, align }) => {
           }}
         ></b>
       </Box>
-      <Box display="flex" flexDirection="column" gap="16px" alignItems={align}>
-        {content.map((item) => {
-          {/* console.log(`/${path}/${item.slug}`); */}
+      <Box display="flex" flexDirection="column" gap="16px">
+        {content?.map((item) => {
           return (
             <Link
               key={item.id}
@@ -68,7 +64,7 @@ const HomeTitle = ({ title, path, content, align }) => {
                   marginTop: "6px",
                 }}
               >
-                {item.createdAt}
+                {moment(item.createdAt).format("MM/DD/YYYY")}
               </span>
             </Link>
           );

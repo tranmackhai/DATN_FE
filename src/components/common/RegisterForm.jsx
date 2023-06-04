@@ -69,7 +69,7 @@ const RegisterForm = () => {
         const respone = await accountApi.register({ ...values });
         if (respone.response.status === 201) {
           navigate("/");
-          dispath(setAccount(respone.response.data));
+          dispatch(setAccount(respone.response.data));
         }
       } catch (error) {
         console.log(error);
@@ -80,7 +80,7 @@ const RegisterForm = () => {
   const theme = useTheme();
   const [isRegisterRequest, setisRegisterRequest] = useState(false);
   const navigate = useNavigate();
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {

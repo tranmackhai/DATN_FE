@@ -85,5 +85,19 @@ export const rightNav = [
         path: "/",
       },
     ],
+    drop4: [
+      {
+        title: "Thông tin tài khoản",
+        path: "/thong-tin-ca-nhan",
+      },
+      {
+        title: "Đăng tin",
+        path: "/dangtingiaovien",
+      },
+      {
+        title: "Đăng xuất",
+        path: "/",
+      },
+    ],
   },
 ];

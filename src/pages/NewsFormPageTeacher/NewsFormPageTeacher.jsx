@@ -1,42 +1,61 @@
 import { useTheme } from "@emotion/react";
 import { Box, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as shortid from "shortid";
 import * as Yup from "yup";
 import newsApi from "../../api/modules/newsCopy.api";
-import uploadApi from "../../api/modules/upload.api";
 import { configSlugify } from "../../utils/index.util";
+import { useNavigate } from "react-router-dom";
+import uploadApi from "../../api/modules/upload.api";
+import { useSelector } from "react-redux";
 
-const NewsFormPage = () => {
+const types = [
+  {
+    label: "Nghiên cứu khoa học",
+    value: "scientificResearch",
+  },
+  {
+    label: "Tin tức",
+    value: "news",
+  },
+  {
+    label: "Tuyển dụng",
+    value: "recruitment",
+  },
+];
+
+const NewsFormPageTeacher = () => {
   const theme = useTheme();
   const account = useSelector((state) => state.account.account);
+  const navigate = useNavigate();
   const newsForm = useFormik({
     initialValues: {
       title: "",
       content: "",
       thumbnail: "",
+      type: "",
     },
     validationSchema: Yup.object({
       title: Yup.string().required("Bạn phải nhập tiêu đề bài viết"),
       content: Yup.string().required("Bạn phải nhập nội dung bài viết"),
+      type: Yup.string().required("Bạn phải chọn loại bài viết"),
     }),
     onSubmit: async (values) => {
       try {
         const response = await newsApi.create({
           ...values,
-          type: "recruitment",
           accountId: account?.id,
+          isActive: true,
           slug: configSlugify(values.title) + "-" + shortid.generate(),
         });
         if (response.status === 201) {
-          toast.success("Bài viết đang được duyệt");
-          newsForm.resetForm({ title: "", content: "", thumbnail: "" });
+          toast.success("Đăng bài thành công");
+          newsForm.resetForm({ title: "", content: "", thumbnail: "", type: "" });
         }
       } catch (error) {
         console.log(error);
@@ -81,6 +100,51 @@ const NewsFormPage = () => {
             },
           }}
         >
+          {/* <Typography
+            sx={{ fontWeight: 500, fontSize: "1rem", marginBottom: "12px" }}
+          >
+           Loại bài viết
+          </Typography> */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              span: {
+                display: "block",
+                textAlign: "center",
+                margin: "0 4px",
+                width: "160px",
+                padding: "8px 0",
+                borderRadius: "6px",
+                cursor: "pointer",
+                backgroundColor: "#f8f8f8",
+              },
+            }}
+          >
+            {types.map((item) => {
+              return (
+                <span
+                  key={item.value}
+                  style={
+                    item.value === newsForm.values.type
+                      ? { border: "1px solid #fcaf17", backgroundColor: "#fff" }
+                      : {}
+                  }
+                  onClick={() => {
+                    newsForm.setFieldValue("type", item.value);
+                  }}
+                >
+                  {item.label}
+                </span>
+              );
+            })}
+          </Box>
+          <p
+            className="MuiFormHelperText-root Mui-error MuiFormHelperText-sizeMedium MuiFormHelperText-contained MuiFormHelperText-filled css-1wc848c-MuiFormHelperText-root"
+            style={{ textAlign: "center" }}
+          >
+            {newsForm.touched.role && newsForm.errors.type}
+          </p>
           <TextField
             type="text"
             placeholder="Tiêu đề"
@@ -183,6 +247,7 @@ const NewsFormPage = () => {
               newsForm.setFieldValue("content", value);
             }}
           />
+          <Box></Box>
           <button
             type="submit"
             style={{
@@ -206,4 +271,4 @@ const NewsFormPage = () => {
   );
 };
 
-export default NewsFormPage;
+export default NewsFormPageTeacher;
