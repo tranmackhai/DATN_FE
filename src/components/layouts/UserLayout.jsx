@@ -26,6 +26,15 @@ const UserLayout = ({ children }) => {
       title: "Đổi mật khẩu",
       link: "/doi-mat-khau",
     },
+    {
+      active: false,
+      icon: "https://res.cloudinary.com/dhypn6jgk/image/upload/v1685849081/IT_UTC2/Icon/acc_user_2_uv1ahp.svg",
+      icon_active:
+        "https://res.cloudinary.com/dhypn6jgk/image/upload/v1685849062/IT_UTC2/Icon/acc_user_2_hover_try0ri.svg",
+      header_title: "Tài khoản",
+      title: "Bài viết của tôi",
+      link: "/bai-viet-cua-toi",
+    },
   ];
 
   const theme = useTheme();

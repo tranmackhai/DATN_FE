@@ -1,18 +1,17 @@
 import { useTheme } from "@emotion/react";
 import { Box, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as shortid from "shortid";
 import * as Yup from "yup";
 import newsApi from "../../api/modules/newsCopy.api";
-import { configSlugify } from "../../utils/index.util";
-import { useNavigate } from "react-router-dom";
 import uploadApi from "../../api/modules/upload.api";
-import { useSelector } from "react-redux";
+import { configSlugify } from "../../utils/index.util";
 
 const types = [
   {
@@ -32,7 +31,6 @@ const types = [
 const NewsFormPageTeacher = () => {
   const theme = useTheme();
   const account = useSelector((state) => state.account.account);
-  const navigate = useNavigate();
   const newsForm = useFormik({
     initialValues: {
       title: "",
@@ -41,9 +39,9 @@ const NewsFormPageTeacher = () => {
       type: "",
     },
     validationSchema: Yup.object({
+      type: Yup.string().required("Bạn phải chọn loại bài viết"),
       title: Yup.string().required("Bạn phải nhập tiêu đề bài viết"),
       content: Yup.string().required("Bạn phải nhập nội dung bài viết"),
-      type: Yup.string().required("Bạn phải chọn loại bài viết"),
     }),
     onSubmit: async (values) => {
       try {
@@ -55,7 +53,12 @@ const NewsFormPageTeacher = () => {
         });
         if (response.status === 201) {
           toast.success("Đăng bài thành công");
-          newsForm.resetForm({ title: "", content: "", thumbnail: "", type: "" });
+          newsForm.resetForm({
+            title: "",
+            content: "",
+            thumbnail: "",
+            type: "",
+          });
         }
       } catch (error) {
         console.log(error);

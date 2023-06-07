@@ -14,16 +14,6 @@ const accountEndpoints = {
 
 const accountApi = {
   login: async ({ gmail, password }) => {
-    // try {
-    //   const response = await publicClient.post(accountEndpoints.login, {
-    //     gmail,
-    //     password,
-    //   });
-    //   // console.log(response);
-    //   return { response };
-    // } catch (err) {
-    //   return { err };
-    // }
     const response = await publicClient.post(accountEndpoints.login, {
       gmail,
       password,
@@ -94,9 +84,12 @@ const accountApi = {
   //     return { err };
   //   }
   // },
-  updatePassword: async ( body ) => {
+  updatePassword: async (body) => {
     try {
-      const response = await privateClient.patch(accountEndpoints.updatePassword, body);
+      const response = await privateClient.patch(
+        accountEndpoints.updatePassword,
+        body
+      );
       return { response };
     } catch (err) {
       return { err };

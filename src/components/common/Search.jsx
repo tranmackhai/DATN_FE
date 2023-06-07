@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import { useTheme } from "@emotion/react";
 import { Box, Button, Fade, Popper } from "@mui/material";
-import React, { useState } from "react";
 
 const Search = () => {
   const theme = useTheme();
@@ -17,7 +17,7 @@ const Search = () => {
   const canBeOpen = open && Boolean(anchorEl);
   const id = canBeOpen ? "spring-popper" : undefined;
   return (
-    <div>
+    <Box>
       <Button
         variant="contained"
         aria-describedby={id}
@@ -95,7 +95,7 @@ const Search = () => {
           </Fade>
         )}
       </Popper>
-    </div>
+    </Box>
   );
 };
 

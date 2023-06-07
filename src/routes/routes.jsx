@@ -23,6 +23,7 @@ import NewsFormPage from "../pages/NewsFormPage/NewsFormPage";
 import NewsFormPageTeacher from "../pages/NewsFormPageTeacher/NewsFormPageTeacher";
 import AuthRecruitment from "../pages/Auth/AuthRecruitment";
 import AuthTeacher from "../pages/Auth/AuthTeacher";
+import MyPost from "../pages/UserPage/Contennt/MyPost/MyPost";
 
 export default function Router() {
   return (
@@ -167,6 +168,14 @@ export default function Router() {
           element={
             <UserLayout>
               <ChangePassword />
+            </UserLayout>
+          }
+        />
+        <Route
+          path="/bai-viet-cua-toi"
+          element={
+            <UserLayout>
+              <MyPost />
             </UserLayout>
           }
         />

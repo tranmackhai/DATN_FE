@@ -7,10 +7,12 @@ import { setAccount } from "../../../redux/features/accountSlice";
 import accountApi from "../../../api/modules/account.api";
 
 const SidebarUserPage = ({ list_item, active, setActive }) => {
+  const theme = useTheme();
   const user = useSelector((state) => state.account.account);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const theme = useTheme();
+
   const handleLogout = async (e) => {
     try {
       e.preventDefault();
@@ -22,6 +24,7 @@ const SidebarUserPage = ({ list_item, active, setActive }) => {
       }
     } catch (error) {}
   };
+
   return (
     <Box
       sx={{

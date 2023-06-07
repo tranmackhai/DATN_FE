@@ -1,8 +1,11 @@
 import publicClient from "../client/public.client.js";
+import privateClient from "../client/private.client.js";
 
 const newsEndpoints = {
   create: "news/create",
   getAll: "news/getAll",
+  getByUser: "news/getByUser",
+  delete: "news/",
 };
 
 const newsApi = {
@@ -35,6 +38,24 @@ const newsApi = {
       const response = await publicClient.get(newsEndpoints.getAll, {
         params: params,
       });
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+  getByUser: async (params) => {
+    try {
+      const response = await privateClient.get(newsEndpoints.getByUser, {
+        params: params,
+      });
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+  delete: async (id) => {
+    try {
+      const response = await privateClient.delete(newsEndpoints.delete + id);
       return response;
     } catch (err) {
       return err;
