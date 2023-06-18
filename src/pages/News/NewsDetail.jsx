@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import Comment from "../../components/common/Comment";
 import { useSelector } from "react-redux";
-import newsApi from "../../api/modules/newsCopy.api";
+import newsApi from "../../api/modules/news.api";
 import moment from "moment";
 
 const NewsDetail = () => {

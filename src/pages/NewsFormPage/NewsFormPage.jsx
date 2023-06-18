@@ -1,7 +1,7 @@
+import React from "react";
 import { useTheme } from "@emotion/react";
 import { Box, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as shortid from "shortid";
 import * as Yup from "yup";
-import newsApi from "../../api/modules/newsCopy.api";
+import newsApi from "../../api/modules/news.api";
 import uploadApi from "../../api/modules/upload.api";
 import { configSlugify } from "../../utils/index.util";
 
@@ -53,6 +53,7 @@ const NewsFormPage = () => {
       newsForm.setFieldValue("thumbnail", response.data.data.secure_url);
     } catch (error) {}
   };
+
   return (
     <section className="post-news">
       <ToastContainer />

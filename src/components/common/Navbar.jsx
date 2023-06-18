@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Container } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import NavDrop from "./NavDrop";
 import { useSelector } from "react-redux";
@@ -45,12 +45,7 @@ const Navbar = ({ justify, items }) => {
                   },
                 }}
               >
-                <NavLink
-                  to={item.path}
-                  className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "active" : ""
-                  }
-                >
+                <Link to={item?.path}>
                   {item.title}
                   {item.drop ? (
                     <i
@@ -64,7 +59,7 @@ const Navbar = ({ justify, items }) => {
                   ) : (
                     <></>
                   )}
-                </NavLink>
+                </Link>
                 {item.drop ? <NavDrop items={item.drop} /> : <></>}
                 {user?.role === "student" && item.drop2 ? (
                   <NavDrop items={item.drop2} />

@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import Comment from "../../components/common/Comment";
 import { useSelector } from "react-redux";
-import newsApi from "../../api/modules/newsCopy.api";
+import "react-quill/dist/quill.core.css";
+import newsApi from "../../api/modules/news.api";
 
 const ScientificResearchDetail = () => {
   const { slug } = useParams();

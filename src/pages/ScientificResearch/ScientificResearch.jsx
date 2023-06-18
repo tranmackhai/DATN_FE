@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { useEffect } from "react";
-import newsApi from "../../api/modules/newsCopy.api";
+import newsApi from "../../api/modules/news.api";
 import moment from "moment";
 
 const ScientificResearch = () => {

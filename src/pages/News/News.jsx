@@ -4,29 +4,28 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { useEffect } from "react";
-import newsApi from "../../api/modules/newsCopy.api";
+import newsApi from "../../api/modules/news.api";
 import moment from "moment";
 
-
 const News = () => {
-  const [news,setNews] = useState()
+  const [news, setNews] = useState();
 
   useEffect(() => {
-    (async() =>{
+    (async () => {
       try {
         const res = await newsApi.getAll({
           type: "news",
-          p:1,
-          limit:5
-        })
-        if(res.status === 200) {
-          setNews(res.data.rows)
+          p: 1,
+          limit: 5,
+        });
+        if (res.status === 200) {
+          setNews(res.data.rows);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    })()
-  },[])
+    })();
+  }, []);
   const theme = useTheme();
   return (
     <section className="news">

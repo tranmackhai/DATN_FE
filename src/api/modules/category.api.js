@@ -1,3 +1,60 @@
+import publicClient from "../client/public.client.js";
+import privateClient from "../client/private.client.js";
+
+const categoryEndpoints = {
+  create: "category/create",
+  getAll: "category/getAll",
+  getByUser: "category/getByUser",
+  delete: "category/",
+};
+
+const categoryApi = {
+  create: async (params) => {
+    try {
+      const response = await publicClient.post(categoryEndpoints.create, {
+        params: params,
+      });
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+
+  getAll: async (params) => {
+    try {
+      const response = await publicClient.get(categoryEndpoints.getAll, {
+        params: params,
+      });
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+
+  getByUser: async (params) => {
+    try {
+      const response = await privateClient.get(categoryEndpoints.getByUser, {
+        params: params,
+      });
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+  delete: async (id) => {
+    try {
+      const response = await privateClient.delete(
+        categoryEndpoints.delete + id
+      );
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+};
+
+export default categoryApi;
+
 export const leftNav = [
   {
     id: "1",
@@ -50,7 +107,6 @@ export const rightNav = [
   {
     id: "3",
     title: "Thành viên",
-    // path: "/dangnhap",
     drop: [
       {
         title: "Đăng nhập",

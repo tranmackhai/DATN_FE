@@ -1,6 +1,6 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import newsApi from "../../api/modules/newsCopy.api";
+import newsApi from "../../api/modules/news.api";
 import Banner from "../../components/common/Banner";
 import HomeTitle from "./HomeTitle";
 import Overview from "./Overview";

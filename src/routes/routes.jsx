@@ -24,6 +24,10 @@ import NewsFormPageTeacher from "../pages/NewsFormPageTeacher/NewsFormPageTeache
 import AuthRecruitment from "../pages/Auth/AuthRecruitment";
 import AuthTeacher from "../pages/Auth/AuthTeacher";
 import MyPost from "../pages/UserPage/Contennt/MyPost/MyPost";
+import Forum from "../pages/Forum/Forum";
+import DirectoryDetail from "../pages/Forum/Directory/DiretoryDetail";
+import Category from "../pages/Forum/Category/Category";
+import Post from "../pages/Forum/Post/Post";
 
 export default function Router() {
   return (
@@ -177,6 +181,38 @@ export default function Router() {
             <UserLayout>
               <MyPost />
             </UserLayout>
+          }
+        />
+        <Route
+          path="/diendan"
+          element={
+            <DefaultLayout>
+              <Forum />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/diendan/:slug"
+          element={
+            <DefaultLayout>
+              <DirectoryDetail />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/diendan/chude/:slug"
+          element={
+            <DefaultLayout>
+              <Category />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/diendan/chude/:slug/:id"
+          element={
+            <DefaultLayout>
+              <Post />
+            </DefaultLayout>
           }
         />
       </Routes>

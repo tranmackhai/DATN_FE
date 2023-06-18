@@ -1,43 +1,66 @@
-import { configSlugify } from "../../utils/index.util";
+import publicClient from "../client/public.client.js";
+import privateClient from "../client/private.client.js";
 
-export const news = [
-  {
-    id: "1",
-    img: "https://dept.utc2.edu.vn/bomoncntt/data/tmp/news_117_totnghiep_400-0.jpg",
-    title:
-      "CHƯƠNG TRÌNH HƯỚNG NGHIỆP – CARRER TALK CÙNG SYNOPSYS VIENAMCARRER TALK CÙNG SYNOPSYS VIENAMCARRER TALK CÙNG SYNOPSYS VIENAMCARRER TALK CÙNG SYNOPSYS VIENAMCARRER TALK CÙNG SYNOPSYS VIENAM",
-    slug: configSlugify(
-      "CHƯƠNG TRÌNH HƯỚNG NGHIỆP – CARRER TALK CÙNG SYNOPSYS VIENAM"
-    ),
-    createdAt: "Tháng Tư 27, 2023",
-  },
-  {
-    id: "2",
-    img: "https://dept.utc2.edu.vn/bomoncntt/data/tmp/news_117_totnghiep_400-0.jpg",
-    title: "CHƯƠNG TRÌNH HƯỚNG NGHIỆP – CARRER TALK CÙNG SYNOPSYS VIENAM",
-    slug: configSlugify(
-      "CHƯƠNG TRÌNH HƯỚNG NGHIỆP – CARRER TALK CÙNG SYNOPSYS VIENAM"
-    ),
-    createdAt: "Tháng Tư 27, 2023",
-  },
-  {
-    id: "3",
-    img: "https://dept.utc2.edu.vn/bomoncntt/data/tmp/news_117_totnghiep_400-0.jpg",
-    title: "CHƯƠNG TRÌNH HƯỚNG NGHIỆP – CARRER TALK CÙNG SYNOPSYS VIENAM",
-    slug: configSlugify(
-      "CHƯƠNG TRÌNH HƯỚNG NGHIỆP – CARRER TALK CÙNG SYNOPSYS VIENAM"
-    ),
-    createdAt: "Tháng Tư 27, 2023",
-  },
-  {
-    id: "4",
-    img: "https://dept.utc2.edu.vn/bomoncntt/data/tmp/news_117_totnghiep_400-0.jpg",
-    title: "CHƯƠNG TRÌNH HƯỚNG NGHIỆP – CARRER TALK CÙNG SYNOPSYS VIENAM",
-    slug: configSlugify(
-      "CHƯƠNG TRÌNH HƯỚNG NGHIỆP – CARRER TALK CÙNG SYNOPSYS VIENAM"
-    ),
-    createdAt: "Tháng Tư 27, 2023",
-  },
-];
+const newsEndpoints = {
+  create: "news/create",
+  getAll: "news/getAll",
+  getByUser: "news/getByUser",
+  delete: "news/",
+};
 
+const newsApi = {
+  create: async ({
+    title,
+    thumbnail,
+    content,
+    slug,
+    accountId,
+    type,
+    isActive,
+  }) => {
+    try {
+      const response = await publicClient.post(newsEndpoints.create, {
+        title,
+        thumbnail,
+        content,
+        slug,
+        accountId,
+        type,
+        isActive,
+      });
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+  getAll: async (params) => {
+    try {
+      const response = await publicClient.get(newsEndpoints.getAll, {
+        params: params,
+      });
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+  getByUser: async (params) => {
+    try {
+      const response = await privateClient.get(newsEndpoints.getByUser, {
+        params: params,
+      });
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+  delete: async (id) => {
+    try {
+      const response = await privateClient.delete(newsEndpoints.delete + id);
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+};
 
+export default newsApi;

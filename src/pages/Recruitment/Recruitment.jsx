@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Box, Pagination, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import newsApi from "../../api/modules/newsCopy.api";
+import newsApi from "../../api/modules/news.api";
 import moment from "moment";
 
 const Recruitment = () => {

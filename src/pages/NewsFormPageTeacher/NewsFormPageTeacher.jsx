@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as shortid from "shortid";
 import * as Yup from "yup";
-import newsApi from "../../api/modules/newsCopy.api";
+import newsApi from "../../api/modules/news.api";
 import uploadApi from "../../api/modules/upload.api";
 import { configSlugify } from "../../utils/index.util";
 
@@ -103,11 +103,6 @@ const NewsFormPageTeacher = () => {
             },
           }}
         >
-          {/* <Typography
-            sx={{ fontWeight: 500, fontSize: "1rem", marginBottom: "12px" }}
-          >
-           Loại bài viết
-          </Typography> */}
           <Box
             sx={{
               display: "flex",

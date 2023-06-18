@@ -5,19 +5,23 @@ html {
   line-height: 1.3;
   overflow-x: hidden;
 }
+
 a {
   text-decoration: none;
   color: #000;
 }
+
 li {
   list-style: none;
 }
+
 .line_clamp {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+
 .line_clamp-table {
   text-overflow: ellipsis;
   overflow: hidden;

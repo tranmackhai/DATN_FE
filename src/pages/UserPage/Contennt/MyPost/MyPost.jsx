@@ -16,7 +16,7 @@ import { ToastContainer } from "react-toastify";
 import Paper from "@mui/material/Paper";
 import moment from "moment";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import newsApi from "../../../../api/modules/newsCopy.api";
+import newsApi from "../../../../api/modules/news.api";
 import { useSelector } from "react-redux";
 import ConfirmDialog from "../../../../components/common/ConfirmDialog";
 

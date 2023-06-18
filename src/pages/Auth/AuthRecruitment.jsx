@@ -4,8 +4,15 @@ import { useSelector } from "react-redux";
 
 const AuthRecruitment = ({ children }) => {
   const user = useSelector((state) => state.account.account);
+  const isFinish = useSelector((state) => state.account.isFinishGetProfile);
   if (user && user.role === "recruitment") {
     return children;
+  }
+  if (isFinish && user) {
+    return children;
+  }
+  if (!isFinish) {
+    return <></>;
   }
   return (
     <Box textAlign="center">

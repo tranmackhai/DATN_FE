@@ -14,7 +14,7 @@ const SideBar = () => {
           border: `1px solid ${theme.palette.secondary.main}`,
           borderRadius: "4px",
           marginLeft: "24px",
-          padding: "24px 0"
+          padding: "24px 0",
         }}
       >
         <Box>
@@ -51,7 +51,7 @@ const SideBar = () => {
           </Typography>
           <div className="separation"></div>
         </Box>
-        <Box paddingLeft="16px">
+        {/* <Box paddingLeft="16px">
           {news.map((item) => {
             return (
               <Link
@@ -78,7 +78,7 @@ const SideBar = () => {
               </Link>
             );
           })}
-        </Box>
+        </Box> */}
       </Box>
     </section>
   );
