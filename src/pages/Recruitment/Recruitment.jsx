@@ -32,7 +32,7 @@ const Recruitment = () => {
   return (
     <section className="recruitment">
       <Box>
-        {data.rows.map((item) => {
+        {data?.rows.map((item) => {
           return (
             <Box
               key={item.id}
@@ -76,7 +76,7 @@ const Recruitment = () => {
                   >
                     {item.title}
                   </Typography>
-                  <span>{moment(item.createdAt).format("MM/DD/YYYY")}</span>
+                  <span>{moment(item.createdAt).format("DD/MM/YYYY")}</span>
                 </Box>
               </Link>
             </Box>

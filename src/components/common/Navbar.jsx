@@ -1,9 +1,9 @@
-import React from "react";
-import { Box, Container } from "@mui/material";
-import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "@emotion/react";
-import NavDrop from "./NavDrop";
+import { Box, Container } from "@mui/material";
+import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import NavDrop from "./NavDrop";
 
 const Navbar = ({ justify, items }) => {
   const theme = useTheme();

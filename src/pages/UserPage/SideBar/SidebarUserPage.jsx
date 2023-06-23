@@ -6,9 +6,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { setAccount } from "../../../redux/features/accountSlice";
 import accountApi from "../../../api/modules/account.api";
 
-const SidebarUserPage = ({ list_item, active, setActive }) => {
+const SidebarUserPage = ({ list_item, active, setActive, list_item2 }) => {
   const theme = useTheme();
   const user = useSelector((state) => state.account.account);
+  console.log(user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -111,27 +112,51 @@ const SidebarUserPage = ({ list_item, active, setActive }) => {
           },
         }}
       >
-        <ul>
-          {list_item.map((item, index) => {
-            return (
-              <li
-                onClick={() => {
-                  setActive(item.title);
-                }}
-                className={item.title === active ? "active" : ""}
-                key={index}
-              >
-                <Link to={item.link}>
-                  <img
-                    src={item.title === active ? item.icon_active : item.icon}
-                    alt=""
-                  />
-                  <span>{item.title}</span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        {user?.role === "student" ? (
+          <ul>
+            {list_item2.map((item, index) => {
+              return (
+                <li
+                  onClick={() => {
+                    setActive(item.title);
+                  }}
+                  className={item.title === active ? "active" : ""}
+                  key={index}
+                >
+                  <Link to={item.link}>
+                    <img
+                      src={item.title === active ? item.icon_active : item.icon}
+                      alt=""
+                    />
+                    <span>{item.title}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <ul>
+            {list_item.map((item, index) => {
+              return (
+                <li
+                  onClick={() => {
+                    setActive(item.title);
+                  }}
+                  className={item.title === active ? "active" : ""}
+                  key={index}
+                >
+                  <Link to={item.link}>
+                    <img
+                      src={item.title === active ? item.icon_active : item.icon}
+                      alt=""
+                    />
+                    <span>{item.title}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </Box>
     </Box>
   );

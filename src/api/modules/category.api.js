@@ -9,11 +9,9 @@ const categoryEndpoints = {
 };
 
 const categoryApi = {
-  create: async (params) => {
+  create: async (body) => {
     try {
-      const response = await publicClient.post(categoryEndpoints.create, {
-        params: params,
-      });
+      const response = await privateClient.post(categoryEndpoints.create, body);
       return response;
     } catch (err) {
       return err;
@@ -22,7 +20,7 @@ const categoryApi = {
 
   getAll: async (params) => {
     try {
-      const response = await publicClient.get(categoryEndpoints.getAll, {
+      const response = await privateClient.get(categoryEndpoints.getAll, {
         params: params,
       });
       return response;

@@ -29,22 +29,21 @@ const Directory = () => {
   const theme = useTheme();
 
   const [categorys, setCategorys] = useState();
-
+  console.log(categorys);
   useEffect(() => {
     (async () => {
       try {
         const res = await categoryApi.getAll({ sortType: "ASC" });
         if (res.status === 200) {
-          setCategorys(
-            res.data.rows.filter((item) => item.children.length > 0)
-          );
-          console.log(res);
+          setCategorys(res.data.rows.filter((item) => item.parentId === null));
+          // console.log(res);
         }
       } catch (error) {
         console.log(error);
       }
     })();
   }, []);
+
   return (
     <Container disableGutters={true} maxWidth="lg">
       <Typography
@@ -74,8 +73,8 @@ const Directory = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Danh mục</TableCell>
-                  <TableCell align="center">Chủ đề</TableCell>
                   <TableCell align="center">Bài viết</TableCell>
+                  <TableCell align="center">Phản hồi</TableCell>
                   <TableCell align="center">Bài viết cuối cùng</TableCell>
                 </TableRow>
               </TableHead>
@@ -102,7 +101,7 @@ const Directory = () => {
                           <TableRow key={item.id}>
                             <TableCell>
                               <Box display="flex">
-                                <IconButton>
+                                <IconButton sx={{ cursor: "default" }}>
                                   <ForumIcon />
                                 </IconButton>
                                 <Box
@@ -129,13 +128,20 @@ const Directory = () => {
                                 </Box>
                               </Box>
                             </TableCell>
-                            <TableCell align="center" width="80px">
-                              30
+                            <TableCell align="center" width="100px">
+                              {
+                                item.postsList?.filter(
+                                  (item) => !item?.parentId
+                                ).length
+                              }
                             </TableCell>
-                            <TableCell align="center" width="80px">
-                              30
+                            <TableCell align="center" width="100px">
+                              {
+                                item.postsList?.filter((item) => item?.parentId)
+                                  .length
+                              }
                             </TableCell>
-                            <TableCell width="300px">
+                            <TableCell width="250px">
                               <Box
                                 sx={{
                                   display: "table",
@@ -144,7 +150,7 @@ const Directory = () => {
                                 }}
                               >
                                 <Box display="flex">
-                                  <IconButton>
+                                  <IconButton sx={{ cursor: "default" }}>
                                     <AccountBoxIcon />
                                   </IconButton>
                                   <Box
@@ -166,12 +172,30 @@ const Directory = () => {
                                       },
                                     }}
                                   >
-                                    <Link to="">
-                                      Đổi ảnh đại diện cho sinh viên đã tốt
-                                      nghiệp.
+                                    <Link
+                                      // to={`/diendan/chude/${item.slug}/${
+                                      //   item.postsList[0]?.id
+                                      // }#${
+                                      //   item.postsList[
+                                      //     item?.postsList.length - 1
+                                      //   ]?.id
+                                      // }`}
+                                      to="#"
+                                    >
+                                      Xem bài viết
                                     </Link>
-                                    <span>By: 2321312</span>
-                                    <span>dd/mm/yyyy/time</span>
+                                    <span>
+                                      By:{" "}
+                                      {
+                                        item.postsList[
+                                          item?.postsList.length - 1
+                                        ]?.account?.name
+                                      }
+                                    </span>
+                                    {moment(
+                                      item.postsList[item?.postsList.length - 1]
+                                        ?.createdAt
+                                    ).format("DD/MM/YYYY")}
                                   </Box>
                                 </Box>
                               </Box>

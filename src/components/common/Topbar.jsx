@@ -6,7 +6,6 @@ import { useTheme } from "@emotion/react";
 import iconTopbar from "../../api/modules/iconTopbar.api";
 import Navbar from "./Navbar";
 import { leftNav, rightNav } from "../../api/modules/category.api";
-import Search from "./Search";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -14,12 +13,6 @@ const Topbar = () => {
     <header
       style={{
         boxShadow: " rgba(0, 0, 0, 0.32) -3.67394e-16px 2px 8px 0px ",
-        // position: "fixed",
-        // top: "0",
-        // left: "0",
-        // right: "0",
-        // zIndex: "999",
-        // backgroundColor: "#fff"
       }}
     >
       <Box
@@ -75,7 +68,7 @@ const Topbar = () => {
         </Container>
       </Box>
       <Container disableGutters={true} maxWidth="lg">
-        <Box display="flex" alignItems="center" >
+        <Box display="flex" alignItems="center">
           <Box width="40%">
             <Navbar justify="flex-start" items={leftNav} />
           </Box>
@@ -86,7 +79,6 @@ const Topbar = () => {
           </Box>
           <Box width="40%" display="flex">
             <Navbar justify="flex-end" items={rightNav} />
-            <Search />
           </Box>
         </Box>
       </Container>

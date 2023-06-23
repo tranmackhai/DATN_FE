@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import { Box, Typography } from "@mui/material";
-import { news } from "../../api/modules/news.api";
+import newsApi from "../../api/modules/news.api";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 const SideBar = () => {
   const theme = useTheme();
+  const [news, setNews] = useState();
+  console.log(news);
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await newsApi.getAll({
+          p: 1,
+          limit: 5,
+        });
+        if (res.status === 200) {
+          setNews(res.data.rows);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
     <section className="sidebar">
       <Box
@@ -51,12 +70,12 @@ const SideBar = () => {
           </Typography>
           <div className="separation"></div>
         </Box>
-        {/* <Box paddingLeft="16px">
-          {news.map((item) => {
+        <Box paddingLeft="16px">
+          {news?.map((item) => {
             return (
               <Link
                 key={item.id}
-                to={item.path}
+                to={item.slug}
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -73,12 +92,12 @@ const SideBar = () => {
                     // marginTop: "4px",
                   }}
                 >
-                  {item.createdAt}
+                  {moment(item.createdAt).format("DD/MM/YYYY")}
                 </span>
               </Link>
             );
           })}
-        </Box> */}
+        </Box>
       </Box>
     </section>
   );

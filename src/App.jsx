@@ -4,7 +4,10 @@ import { ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import accountApi from "./api/modules/account.api";
-import { setAccount } from "./redux/features/accountSlice";
+import {
+  setAccount,
+  setIsFinishGetProfile,
+} from "./redux/features/accountSlice";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -23,7 +26,7 @@ const App = () => {
       } catch (error) {
         console.log(error);
       }
-    }
+    } else dispatch(setIsFinishGetProfile(true));
   }, []);
 
   return (

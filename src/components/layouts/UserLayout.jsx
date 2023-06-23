@@ -36,6 +36,26 @@ const UserLayout = ({ children }) => {
       link: "/bai-viet-cua-toi",
     },
   ];
+  const list_item2 = [
+    {
+      active: false,
+      icon: "https://res.cloudinary.com/dhypn6jgk/image/upload/v1684833742/IT_UTC2/Icon/acc_user_1_dmrvua.svg",
+      icon_active:
+        "https://res.cloudinary.com/dhypn6jgk/image/upload/v1684833742/IT_UTC2/Icon/acc_user_1_hover_nmofem.svg",
+      title: "Tài khoản của tôi",
+      header_title: "Tài khoản",
+      link: "/thong-tin-ca-nhan",
+    },
+    {
+      active: false,
+      icon: "https://res.cloudinary.com/dhypn6jgk/image/upload/v1684833743/IT_UTC2/Icon/acc_user_3_ip4uvs.svg",
+      icon_active:
+        "https://res.cloudinary.com/dhypn6jgk/image/upload/v1684833742/IT_UTC2/Icon/acc_user_3_hover_c8kxb8.svg",
+      header_title: "Tài khoản",
+      title: "Đổi mật khẩu",
+      link: "/doi-mat-khau",
+    },
+  ];
 
   const theme = useTheme();
   const location = useLocation();
@@ -87,6 +107,7 @@ const UserLayout = ({ children }) => {
               <Grid item xs={3}>
                 <SidebarUserPage
                   list_item={list_item}
+                  list_item2={list_item2}
                   active={active}
                   setActive={setActive}
                 />

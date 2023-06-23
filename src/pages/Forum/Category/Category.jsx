@@ -24,11 +24,13 @@ import SidebarForum from "../SidebarForum";
 import { useParams, Link } from "react-router-dom";
 import postsApi from "../../../api/modules/posts.api";
 import categoryApi from "../../../api/modules/category.api";
+import { useSelector } from "react-redux";
 
 const Category = () => {
   const theme = useTheme();
   const [posts, setPosts] = useState();
   const [category, setCategory] = useState();
+  const user = useSelector((state) => state.account.account);
   const { slug } = useParams();
 
   useEffect(() => {
@@ -38,6 +40,7 @@ const Category = () => {
           slug,
         });
         const res2 = await postsApi.getAll({
+          onlyParent: true,
           categorySlug: slug,
         });
         if (res1.status === 200) {
@@ -55,18 +58,72 @@ const Category = () => {
 
   return (
     <Container disableGutters={true} maxWidth="lg">
-      <Typography
-        variant="h6"
-        fontWeight="700"
-        textTransform="uppercase"
-        padding="12px 0"
-        marginLeft="12px"
-      >
-        {category?.title}
-      </Typography>
-      <Button component={Link} to={`${category?.slug}/add`}>
-        Thêm bài viết
-      </Button>
+      <Grid container>
+        <Grid
+          item
+          xs={9}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          padding="12px 0"
+        >
+          <Typography
+            variant="h6"
+            fontWeight="700"
+            textTransform="uppercase"
+            padding="12px 0"
+            marginLeft="12px"
+          >
+            {category?.title}
+          </Typography>
+          {(user?.role === "teacher" || user?.role === "admin") &&
+          (category?.id === 5 || category?.id === 3) ? (
+            <Button
+              variant="contained"
+              component={Link}
+              to={`/chude/${category?.slug}/add`}
+              sx={{
+                color: "#fff",
+                height: "40px",
+                fontWeight: "600",
+                backgroundColor: theme.palette.primary.main,
+                "&:hover": {
+                  backgroundColor: "rgba(252, 175, 23, 0.8)",
+                },
+              }}
+            >
+              Thêm bài viết
+            </Button>
+          ) : (
+            <></>
+          )}
+          {(user?.role === "student" ||
+            user?.role === "recruitment" ||
+            user?.role === "teacher" ||
+            user?.role === "admin") &&
+          category?.id !== 5 &&
+          category?.id !== 3 ? (
+            <Button
+              variant="contained"
+              component={Link}
+              to={`/chude/${category?.slug}/add`}
+              sx={{
+                color: "#fff",
+                height: "40px",
+                fontWeight: "600",
+                backgroundColor: theme.palette.primary.main,
+                "&:hover": {
+                  backgroundColor: "rgba(252, 175, 23, 0.8)",
+                },
+              }}
+            >
+              Thêm bài viết
+            </Button>
+          ) : (
+            <></>
+          )}
+        </Grid>
+      </Grid>
       <Grid container>
         <Grid
           item
@@ -84,9 +141,9 @@ const Category = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>Chủ đề</TableCell>
+                  <TableCell>Bài viết</TableCell>
                   <TableCell align="center">Thống kê</TableCell>
-                  <TableCell align="center">Bài viết cuối cùng</TableCell>
+                  <TableCell align="center">Phản hồi cuối cùng</TableCell>
                 </TableRow>
                 <TableRow sx={{ backgroundColor: "#f8f8f8" }}>
                   <TableCell colSpan="4" sx={{ border: "none" }}>
@@ -134,32 +191,25 @@ const Category = () => {
                               </span>
                               <span>
                                 {moment(data.createdAt).format(
-                                  "MM/DD/YYYY HH:mm"
+                                  "DD/MM/YYYY HH:mm"
                                 )}
                               </span>
                             </Box>
                           </Box>
                         </Box>
                       </TableCell>
-                      <TableCell width="150px">
-                        <Box display="flex">
-                          <IconButton>
-                            <AttachFileIcon />
-                          </IconButton>
-                          <Box
-                            display="flex"
-                            flexDirection="column"
-                            sx={{
-                              span: {
-                                fontSize: "0.8rem",
-                                color: theme.palette.primary.contrastText,
-                              },
-                            }}
-                          >
-                            <span>30 Phản hồi</span>
-                            <span>500000 View</span>
-                            <span>0 Likes</span>
-                          </Box>
+                      <TableCell width="150px" align="center">
+                        <Box
+                          sx={{
+                            span: {
+                              fontSize: "0.8rem",
+                              color: theme.palette.primary.contrastText,
+                            },
+                          }}
+                        >
+                          <span>{data.children.length} Phản hồi</span>
+                          {/* <span>500000 View</span>
+                            <span>0 Likes</span> */}
                         </Box>
                       </TableCell>
                       <TableCell width="200px">
@@ -181,9 +231,23 @@ const Category = () => {
                               },
                             }}
                           >
-                            <span>by Trần Mặc Khải</span>
-                            <span>05-10-2023, 17:53</span>
-                            <Link to="">Xem bài viết</Link>
+                            <span>
+                              by{" "}
+                              {
+                                data.children[data?.children.length - 1]
+                                  ?.account?.name
+                              }
+                            </span>
+                            {moment(
+                              data.children[data?.children.length - 1]
+                                ?.createdAt
+                            ).format("DD/MM/YYYY HH:mm")}
+                            <Link
+                              // to={`/diendan/chude/${data.slug}/${data.children[0]?.id}`}
+                              to="#"
+                            >
+                              Xem bài viết
+                            </Link>
                           </Box>
                         </Box>
                       </TableCell>

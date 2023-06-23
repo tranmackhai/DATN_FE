@@ -77,7 +77,7 @@ const MyPost = () => {
           backgroundColor: "#fff",
           borderRadius: "4px",
           padding: "20px",
-          height: "516px",
+          minHeight: "516px",
         }}
       >
         <ToastContainer />

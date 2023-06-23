@@ -91,6 +91,14 @@ const RegisterForm = () => {
   return (
     <Box component="form" onSubmit={registerForm.handleSubmit}>
       <Stack spacing={3}>
+        <Typography
+          variant="h4"
+          fontWeight="700"
+          textTransform="uppercase"
+          color={theme.palette.primary.highlightText}
+        >
+          Đăng ký
+        </Typography>
         <TextField
           type="text"
           placeholder="Nhập họ và tên"

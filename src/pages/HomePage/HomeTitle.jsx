@@ -64,7 +64,7 @@ const HomeTitle = ({ title, path, content }) => {
                   marginTop: "6px",
                 }}
               >
-                {moment(item.createdAt).format("MM/DD/YYYY")}
+                {moment(item.createdAt).format("DD/MM/YYYY")}
               </span>
             </Link>
           );

@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import {
   Box,
+  Button,
   Container,
   Grid,
   IconButton,
@@ -20,14 +21,17 @@ import { useTheme } from "@emotion/react";
 import { Link } from "react-router-dom";
 import SidebarForum from "../SidebarForum";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const DiretoryDetail = () => {
   const theme = useTheme();
 
   const [category, setCategory] = useState();
   const { slug } = useParams();
-  console.log(slug);
+  // console.log(slug);
   console.log(category);
+  const user = useSelector((state) => state.account.account);
+  // console.log(user);
 
   useEffect(() => {
     (async () => {
@@ -45,15 +49,46 @@ const DiretoryDetail = () => {
 
   return (
     <Container disableGutters={true} maxWidth="lg">
-      <Typography
-        variant="h6"
-        fontWeight="700"
-        textTransform="uppercase"
-        padding="12px 0"
-        marginLeft="12px"
-      >
-        {category?.title}
-      </Typography>
+      <Grid container>
+        <Grid
+          item
+          xs={9}
+          display="flex"
+          padding="12px 0"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Typography
+            variant="h6"
+            fontWeight="700"
+            textTransform="uppercase"
+            padding="12px 0"
+            marginLeft="12px"
+          >
+            {category?.title}
+          </Typography>
+          {user?.role === "teacher" || user?.role === "admin" ? (
+            <Button
+              variant="contained"
+              component={Link}
+              to={`/danhmuc/${category?.slug}/add`}
+              sx={{
+                color: "#fff",
+                height: "40px",
+                fontWeight: "600",
+                backgroundColor: theme.palette.primary.main,
+                "&:hover": {
+                  backgroundColor: "rgba(252, 175, 23, 0.8)",
+                },
+              }}
+            >
+              Thêm chủ đề
+            </Button>
+          ) : (
+            <></>
+          )}
+        </Grid>
+      </Grid>
       <Grid container>
         <Grid
           item
@@ -71,9 +106,9 @@ const DiretoryDetail = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>Danh mục</TableCell>
-                  <TableCell align="center">Chủ đề</TableCell>
+                  <TableCell>Chủ đề</TableCell>
                   <TableCell align="center">Bài viết</TableCell>
+                  <TableCell align="center">Phản hồi</TableCell>
                   <TableCell align="center">Bài viết cuối cùng</TableCell>
                 </TableRow>
               </TableHead>
@@ -113,7 +148,7 @@ const DiretoryDetail = () => {
                       <TableCell align="center" width="80px">
                         30
                       </TableCell>
-                      <TableCell align="center" width="80px">
+                      <TableCell align="center" width="100px">
                         30
                       </TableCell>
                       <TableCell width="300px">

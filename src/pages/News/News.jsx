@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Pagination, Typography } from "@mui/material";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -8,29 +8,36 @@ import newsApi from "../../api/modules/news.api";
 import moment from "moment";
 
 const News = () => {
-  const [news, setNews] = useState();
+  const theme = useTheme();
+  const [news, setNews] = useState({ rows: [], count: 0 });
+  const navigate = useNavigate();
+  const [query] = useSearchParams();
+  const p = query.get("p") || 1;
+  const handlePageChange = (page) => {
+    navigate(`?p=${page}`);
+  };
 
   useEffect(() => {
     (async () => {
       try {
         const res = await newsApi.getAll({
           type: "news",
-          p: 1,
+          isActive: true,
           limit: 5,
+          p: p,
         });
         if (res.status === 200) {
-          setNews(res.data.rows);
+          setNews(res.data);
         }
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
-  const theme = useTheme();
+  }, [p]);
   return (
     <section className="news">
       <Box>
-        {news?.map((item) => {
+        {news?.rows.map((item) => {
           return (
             <Box
               key={item.id}
@@ -74,12 +81,24 @@ const News = () => {
                   >
                     {item.title}
                   </Typography>
-                  <span>{moment(item.createdAt).format("MM/DD/YYYY")}</span>
+                  <span>{moment(item.createdAt).format("DD/MM/YYYY")}</span>
                 </Box>
               </Link>
             </Box>
           );
         })}
+        {news.count > 0 && (
+          <Pagination
+            count={Math.ceil(news.count / 5)}
+            shape="rounded"
+            onChange={(e, page) => {
+              handlePageChange(page);
+            }}
+            sx={{
+              ul: { justifyContent: "center" },
+            }}
+          />
+        )}
       </Box>
     </section>
   );

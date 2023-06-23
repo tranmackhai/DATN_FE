@@ -28,6 +28,18 @@ li {
   white-space: nowrap;
 }
 
+.content {
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+// Congif modal
+
+.modal {
+  background-color: "rgba(0, 0, 0, 0.2)" !important;
+}
+
 /* Config swiper */
 
 .swiper-pagination-bullet {

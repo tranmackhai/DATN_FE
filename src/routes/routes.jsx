@@ -28,6 +28,9 @@ import Forum from "../pages/Forum/Forum";
 import DirectoryDetail from "../pages/Forum/Directory/DiretoryDetail";
 import Category from "../pages/Forum/Category/Category";
 import Post from "../pages/Forum/Post/Post";
+import AuthForum from "../pages/Auth/AuthForum";
+import FormAddTopic from "../components/common/FormAddTopic";
+import FormAddPosts from "../components/common/FormAddPosts";
 
 export default function Router() {
   return (
@@ -186,9 +189,11 @@ export default function Router() {
         <Route
           path="/diendan"
           element={
-            <DefaultLayout>
-              <Forum />
-            </DefaultLayout>
+            <AuthForum>
+              <DefaultLayout>
+                <Forum />
+              </DefaultLayout>
+            </AuthForum>
           }
         />
         <Route
@@ -212,6 +217,22 @@ export default function Router() {
           element={
             <DefaultLayout>
               <Post />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/danhmuc/:slug/add"
+          element={
+            <DefaultLayout>
+              <FormAddTopic />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/chude/:slug/add"
+          element={
+            <DefaultLayout>
+              <FormAddPosts />
             </DefaultLayout>
           }
         />

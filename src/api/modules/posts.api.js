@@ -10,11 +10,9 @@ const postsEndpoints = {
 };
 
 const postsApi = {
-  create: async (params) => {
+  create: async (body) => {
     try {
-      const response = await privateClient.post(postsEndpoints.create, {
-        params: params,
-      });
+      const response = await privateClient.post(postsEndpoints.create, body);
       return response;
     } catch (err) {
       return err;

@@ -26,9 +26,13 @@ export const accountSlice = createSlice({
     setProfile: (state, action) => {
       state.account = action.payload;
     },
+    setIsFinishGetProfile: (state, action) => {
+      state.isFinishGetProfile = action.payload;
+    },
   },
 });
 
-export const { setAccount, setCurrentUser, setProfile } = accountSlice.actions;
+export const { setAccount, setCurrentUser, setProfile, setIsFinishGetProfile } =
+  accountSlice.actions;
 
 export default accountSlice.reducer;

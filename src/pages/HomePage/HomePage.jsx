@@ -45,7 +45,7 @@ const HomePage = () => {
   }, []);
   const theme = useTheme();
   return (
-    <section className="homepage">
+    <section className="home-page">
       <Banner />
       <Container disableGutters={true} maxWidth="lg">
         <Box display="flex" alignItems="flex-start" marginTop="24px" gap="24px">
