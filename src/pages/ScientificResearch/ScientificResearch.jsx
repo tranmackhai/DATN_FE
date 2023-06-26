@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import newsApi from "../../api/modules/news.api";
 import moment from "moment";
+import Search from "../../components/common/Search";
 
 const ScientificResearch = () => {
   const theme = useTheme();
@@ -13,24 +14,40 @@ const ScientificResearch = () => {
     rows: [],
     count: 0,
   });
+
   const navigate = useNavigate();
   const [query] = useSearchParams();
   const p = query.get("p") || 1;
+  const q = query.get("q") || "";
+
   const handlePageChange = (page) => {
     navigate(`?p=${page}`);
   };
 
+  const handleSearch = async (keyword) => {
+    // console.log(keyword);
+    navigate(`?p=${p}&q=${keyword}`);
+  };
+
   useEffect(() => {
     (async () => {
+      const params = {
+        type: "scientificResearch",
+        p: p,
+        limit: 5,
+      };
       try {
-        const res = await newsApi.getAll({
-          type: "scientificResearch",
-          isActive: true,
-          p: p,
-          limit: 5,
-        });
-        if (res.status === 200) {
-          setScientificResearch(res.data);
+        // const res = await newsApi.getAll();
+        // if (res.status === 200) {
+        //   setScientificResearch(res.data);
+        // }
+        if (q === "") {
+          const response = await newsApi.getAll(params);
+          setScientificResearch(response.data);
+        } else {
+          const response = await newsApi.search({ ...params, q: q });
+          setScientificResearch(response.data);
+          console.log(response.data);
         }
       } catch (error) {
         console.log(error);
@@ -39,6 +56,7 @@ const ScientificResearch = () => {
   }, [p]);
   return (
     <section className="scientific-research">
+      <Search onSearch={handleSearch} />
       <Box>
         {scientificResearch?.rows.map((item) => {
           return (

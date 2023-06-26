@@ -160,6 +160,7 @@ const Post = () => {
           {posts?.title}
         </Typography>
         <div className="separation"></div>
+        {/* Posts parent */}
         <Grid
           container
           item
@@ -200,12 +201,16 @@ const Post = () => {
               <Typography
                 sx={{
                   textTransform: "capitalize",
-                  color: posts?.account.role === "admin" ? "red" : "black",
                   fontWeight: "600",
                   fontSize: "1rem",
+                  span: {
+                    color: posts?.account.role === "admin" ? "red" : "black",
+                  },
                 }}
               >
-                {posts?.account.role}
+                {posts?.account.role === "admin" && <span>Quản Trị Viên</span>}
+                {posts?.account.role === "student" && <span>Sinh viên</span>}
+                {posts?.account.role === "teacher" && <span>Giảng viên</span>}
               </Typography>
               <span>{posts?.account.name}</span>
               <span className="separation"></span>
@@ -214,7 +219,7 @@ const Post = () => {
               >
                 {moment(posts?.createdAt).format("DD/MM/YYYY HH:mm")}
               </span>
-              <span>Số bài viết: 30</span>
+              {/* <span>Số bài viết: 30</span> */}
             </Box>
           </Grid>
           <Grid
@@ -257,6 +262,7 @@ const Post = () => {
             </Button>
           </Grid>
         </Grid>
+        {/* Posts children */}
         {repPosts.map((data) => {
           return (
             <Grid
@@ -301,12 +307,20 @@ const Post = () => {
                   <Typography
                     sx={{
                       textTransform: "capitalize",
-                      color: data?.account.role === "admin" ? "red" : "black",
                       fontWeight: "600",
                       fontSize: "1rem",
+                      span: {
+                        color: data?.account.role === "admin" ? "red" : "black",
+                      },
                     }}
                   >
-                    {data?.account.role}
+                    {data?.account.role === "admin" && (
+                      <span>Quản Trị Viên</span>
+                    )}
+                    {data?.account.role === "student" && <span>Sinh viên</span>}{" "}
+                    {data?.account.role === "teacher" && (
+                      <span>Giảng viên</span>
+                    )}
                   </Typography>
                   <span>{data?.account.name}</span>
                   <span className="separation"></span>
@@ -318,7 +332,7 @@ const Post = () => {
                   >
                     {moment(data?.createdAt).format("DD/MM/YYYY HH:mm")}
                   </span>
-                  <span>Số bài viết: 30</span>
+                  {/* <span>Số bài viết: 30</span> */}
                 </Box>
               </Grid>
               <Grid

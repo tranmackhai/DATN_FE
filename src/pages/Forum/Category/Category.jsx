@@ -207,9 +207,7 @@ const Category = () => {
                             },
                           }}
                         >
-                          <span>{data.children.length} Phản hồi</span>
-                          {/* <span>500000 View</span>
-                            <span>0 Likes</span> */}
+                          <span>{data.countChildren} Phản hồi</span>
                         </Box>
                       </TableCell>
                       <TableCell width="200px">
@@ -228,11 +226,12 @@ const Category = () => {
                               span: {
                                 fontSize: "0.8rem",
                                 color: theme.palette.primary.contrastText,
+                                fontWeight: "500",
                               },
                             }}
                           >
-                            <span>
-                              by{" "}
+                            <span className="line_clamp">
+                              Đăng bởi:
                               {
                                 data.children[data?.children.length - 1]
                                   ?.account?.name

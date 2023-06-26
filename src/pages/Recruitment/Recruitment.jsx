@@ -3,34 +3,58 @@ import { Box, Pagination, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import newsApi from "../../api/modules/news.api";
+import Search from "../../components/common/Search";
 import moment from "moment";
 
 const Recruitment = () => {
   const theme = useTheme();
   const [data, setData] = useState({ rows: [], count: 0 });
   const navigate = useNavigate();
+
   const [query] = useSearchParams();
   const p = query.get("p") || 1;
+  const q = query.get("q") || "";
+
   const handlePageChange = (page) => {
     navigate(`?p=${page}`);
   };
+
+  const handleSearch = async (keyword) => {
+    // console.log(keyword);
+    navigate(`?p=${p}&q=${keyword}`);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
+      const params = {
+        type: "recruitment",
+        limit: 5,
+        p: p,
+      };
       try {
-        const response = await newsApi.getAll({
-          type: "recruitment",
-          isActive: true,
-          limit: 5,
-          p: p,
-        });
-        setData(response.data);
+        // const response = await newsApi.getAll({
+        //   type: "recruitment",
+        //   isActive: true,
+        //   limit: 5,
+        //   p: p,
+        // });
+        // setData(response.data);
+        if (q === "") {
+          const response = await newsApi.getAll(params);
+          setData(response.data);
+        } else {
+          const response = await newsApi.search({ ...params, q: q });
+          setData(response.data);
+          console.log(response.data);
+        }
       } catch (error) {}
     };
     fetchData();
-  }, [p]);
+  }, [p, q]);
 
   return (
     <section className="recruitment">
+      <Search onSearch={handleSearch} />
       <Box>
         {data?.rows.map((item) => {
           return (

@@ -19,7 +19,7 @@ import ForumIcon from "@mui/icons-material/Forum";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import Paper from "@mui/material/Paper";
 import SidebarForum from "../SidebarForum";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import categoryApi from "../../../api/modules/category.api";
 import { useState } from "react";
@@ -27,15 +27,28 @@ import { Fragment } from "react";
 
 const Directory = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
+  const [query] = useSearchParams();
+  const p = query.get("p") || 1;
+  const q = query.get("q") || "";
+  const sortBy = query.get("sortBy") || "id";
+  const sortType = query.get("sortType") || "DESC";
 
   const [categorys, setCategorys] = useState();
   console.log(categorys);
+
+  const handlePageChange = (page) => {
+    navigate(`?p=${page}&q=${q}&sortBy=${sortBy}&sortType=${sortType}`);
+  };
+
   useEffect(() => {
     (async () => {
       try {
         const res = await categoryApi.getAll({ sortType: "ASC" });
         if (res.status === 200) {
           setCategorys(res.data.rows.filter((item) => item.parentId === null));
+
           // console.log(res);
         }
       } catch (error) {
@@ -66,10 +79,7 @@ const Directory = () => {
           }}
         >
           <TableContainer component={Paper}>
-            <Table
-            // sx={{ tableLayout: "fixed", width: "100%" }}
-            // aria-label="simple table"
-            >
+            <Table>
               <TableHead>
                 <TableRow>
                   <TableCell>Danh mục</TableCell>
@@ -209,6 +219,19 @@ const Directory = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          {categorys?.count > 0 && (
+            <Pagination
+              count={Math.ceil(categorys.count / 5)}
+              shape="rounded"
+              onChange={(e, page) => {
+                handlePageChange(page);
+              }}
+              sx={{
+                marginTop: "24px",
+                ul: { justifyContent: "center" },
+              }}
+            />
+          )}
         </Grid>
         <Grid item xs={3}>
           <SidebarForum />

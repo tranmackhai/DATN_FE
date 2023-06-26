@@ -47,11 +47,24 @@ const NewsDetail = () => {
             {news.title}
           </Typography>
           <span>{moment(news.createdAt).format("MM/DD/YYYY")}</span>
-          <Box textAlign="center">
+          <Box
+            textAlign="center"
+            className="content"
+            width="50%"
+            margin="0 auto"
+            sx={{
+              img: {
+                objectFit: "contain",
+              },
+            }}
+          >
             <img src={news.thumbnail} />
           </Box>
-          <div dangerouslySetInnerHTML={{ __html: news.content }}></div>
-          {user && <Comment />}
+          <div
+            dangerouslySetInnerHTML={{ __html: news.content }}
+            className="content"
+          ></div>
+          {/* {user && <Comment />} */}
         </Box>
       </Box>
     </section>

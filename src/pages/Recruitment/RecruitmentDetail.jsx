@@ -46,11 +46,24 @@ const RecruitmentDetail = () => {
             {recruitment.title}
           </Typography>
           <span>{moment(recruitment.createdAt).format("MM/DD/YYYY")}</span>
-          <Box textAlign="center">
+          <Box
+            textAlign="center"
+            className="content"
+            width="50%"
+            margin="0 auto"
+            sx={{
+              img: {
+                objectFit: "contain",
+              },
+            }}
+          >
             <img src={recruitment.thumbnail} />
           </Box>
-          <div dangerouslySetInnerHTML={{ __html: recruitment.content }}></div>
-          {user && <Comment />}
+          <div
+            dangerouslySetInnerHTML={{ __html: recruitment.content }}
+            className="content"
+          ></div>
+          {/* {user && <Comment />} */}
         </Box>
       </Box>
     </section>

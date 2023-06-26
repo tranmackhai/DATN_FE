@@ -6,6 +6,7 @@ const newsEndpoints = {
   getAll: "news/getAll",
   getByUser: "news/getByUser",
   delete: "news/",
+  search: "news/search",
 };
 
 const newsApi = {
@@ -56,6 +57,16 @@ const newsApi = {
   delete: async (id) => {
     try {
       const response = await privateClient.delete(newsEndpoints.delete + id);
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+  search: async (params) => {
+    try {
+      const response = await publicClient.get(newsEndpoints.search, {
+        params: params,
+      });
       return response;
     } catch (err) {
       return err;

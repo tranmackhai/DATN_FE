@@ -77,7 +77,7 @@ const Topbar = () => {
               <Logo />
             </Link>
           </Box>
-          <Box width="40%" display="flex">
+          <Box width="40%">
             <Navbar justify="flex-end" items={rightNav} />
           </Box>
         </Box>

@@ -46,13 +46,24 @@ const ScientificResearchDetail = () => {
           {scientificResearch.title}
         </Typography>
         <span>{scientificResearch.createdAt}</span>
-        <Box textAlign="center">
+        <Box
+          textAlign="center"
+          className="content"
+          width="50%"
+          margin="0 auto"
+          sx={{
+            img: {
+              objectFit: "contain",
+            },
+          }}
+        >
           <img src={scientificResearch.thumbnail} />
         </Box>
         <div
+          className="content"
           dangerouslySetInnerHTML={{ __html: scientificResearch.content }}
         ></div>
-        {user && <Comment />}
+        {/* {user && <Comment />} */}
       </Box>
     </section>
   );

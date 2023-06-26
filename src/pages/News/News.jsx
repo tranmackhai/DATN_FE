@@ -6,36 +6,57 @@ import { useState } from "react";
 import { useEffect } from "react";
 import newsApi from "../../api/modules/news.api";
 import moment from "moment";
+import Search from "../../components/common/Search";
 
 const News = () => {
   const theme = useTheme();
   const [news, setNews] = useState({ rows: [], count: 0 });
+
   const navigate = useNavigate();
   const [query] = useSearchParams();
   const p = query.get("p") || 1;
+  const q = query.get("q") || "";
   const handlePageChange = (page) => {
     navigate(`?p=${page}`);
   };
 
+  const handleSearch = (keyword) => {
+    navigate(`?p=${p}&q=${keyword}`);
+  };
+
   useEffect(() => {
     (async () => {
+      const params = {
+        type: "news",
+        limit: 5,
+        p: p,
+      };
       try {
-        const res = await newsApi.getAll({
-          type: "news",
-          isActive: true,
-          limit: 5,
-          p: p,
-        });
-        if (res.status === 200) {
-          setNews(res.data);
+        // const res = await newsApi.getAll({
+        //   type: "news",
+        //   isActive: true,
+        //   limit: 5,
+        //   p: p,
+        // });
+        // if (res.status === 200) {
+        //   setNews(res.data);
+        // }
+        if (q === "") {
+          const response = await newsApi.getAll(params);
+          setNews(response.data);
+        } else {
+          const response = await newsApi.search({ ...params, q: q });
+          setNews(response.data);
+          console.log(response.data);
         }
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [p]);
+  }, [p, q]);
   return (
     <section className="news">
+      <Search onSearch={handleSearch} />
       <Box>
         {news?.rows.map((item) => {
           return (
